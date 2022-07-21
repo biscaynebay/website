@@ -72,10 +72,18 @@
       .placeimg {width:380px; height:200px; background-color:#e4e4e4;
       }
       
-      .viewmore {padding:5px;
-      background-color:#78553a;
-        color:#ffffff;
+      .viewmore {
+        font-family: "Quintessential", cursive;
+        background-color: #78553a;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
       }
+      .viewmore:hover{background-color: #9d7d3f;}
       
     </style>
   </head>
@@ -129,7 +137,7 @@ Add an event listener that runs
         const popup = new mapboxgl.Popup({ offset: [0, -15] })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
-            `<div class="placeimg"></div><h3>${feature.properties.Name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec aliquam turpis, sed laoreet urna. Proin lectus neque, scelerisque a euismod sed, viverra at tortor. Etiam bibendum et risus ut convallis. Donec porta euismod arcu, ac suscipit nibh hendrerit id. Morbi lacinia lectus et lacus tempor, vitae suscipit elit finibus.</p><a href="#" class="viewmore"><p>VEIW MORE</p></a>` /* <p>${feature.properties.Description}</p>*/
+            `<div class="placeimg"></div><h3>${feature.properties.Name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec aliquam turpis, sed laoreet urna. Proin lectus neque, scelerisque a euismod sed, viverra at tortor. Etiam bibendum et risus ut convallis. Donec porta euismod arcu, ac suscipit nibh hendrerit id. Morbi lacinia lectus et lacus tempor, vitae suscipit elit finibus.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>` /* <p>${feature.properties.Description}</p>*/
           )
           .addTo(map);
       });
