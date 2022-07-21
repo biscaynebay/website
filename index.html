@@ -1,104 +1,130 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta charset='utf-8' />
+    <meta charset="utf-8" />
     <title>Biscayne Bay</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body { 
-        margin: 0; 
-        padding: 0; 
+      body {
+        margin: 0;
+        padding: 0;
       }
-      #map { 
-        position: absolute; 
-        top: 0; 
-        bottom: 0; 
-        width: 100%; 
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
       }
       .mapboxgl-popup {
-padding-bottom: 50px;
-}
- 
-.mapboxgl-popup-close-button {
-display: none;
-}
-.mapboxgl-popup-content {
-font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
-padding: 0;
-width: 180px;
-}
-.mapboxgl-popup-content h3 {
-background: #ffffff;
-color: #fff;
-margin: 0;
-padding: 10px;
-border-radius: 3px 3px 0 0;
-font-weight: 700;
-margin-top: -15px;
-}
- 
-.mapboxgl-popup-content h4 {
-margin: 0;
-padding: 10px;
-font-weight: 400;
-}
- 
-.mapboxgl-popup-content div {
-padding: 10px;
-}
- 
-.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
-margin-top: 15px;
-}
- 
-.mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
-border-bottom-color: #91c949;
-}
+        padding-bottom: 50px;
+      }
+
+      .mapboxgl-popup-close-button {
+        display: none;
+      }
+      .mapboxgl-popup-content {
+        font-family: "Quintessential", cursive;
+        padding: 0;
+        width: 400px;
+      }
+      .mapboxgl-popup-content h3 {
+        background: #ffffff;
+        color: #78553a;
+        margin: 0;
+        padding: 10px;
+        border-radius: 3px 3px 0 0;
+        font-weight: 700;
+        margin-top: -15px;
+      }
+
+      .mapboxgl-popup-content h4 {
+        margin: 0;
+        padding: 10px;
+        font-weight: 400;
+      }
+
+      .mapboxgl-popup-content div {
+        padding: 10px;
+      }
+
+      .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+        margin-top: 15px;
+      }
+
+      /*.mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+        border-bottom-color: #ffffff;
+      } */
+      
+      .placeimg {width:380px; height:200px; background-color:#e4e4e4;
+      }
+      
     </style>
   </head>
   <body>
-    <div style="position:fixed; margin-top:5px;margin-left:5px;width:200px;height:200px;"><img src="https://ibb.co/GVWzSBq" width="200" height="200"></div>
-    <div id='map'></div>
+    <div
+      style="
+        position: fixed;
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 200px;
+        height: 200px;
+      "
+    >
+      <img src="https://ibb.co/GVWzSBq" width="200" height="200" />
+    </div>
+    <div id="map"></div>
     <script>
-    // The value for 'accessToken' begins with 'pk...'
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ'; 
-    const map = new mapboxgl.Map({
-      container: 'map',
-      // Replace YOUR_STYLE_URL with your style URL.
-      style: 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih', 
-      center: [-80.051, 25.485],
-      zoom: 9.14
-    });
+      // The value for 'accessToken' begins with 'pk...'
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ";
+      const map = new mapboxgl.Map({
+        container: "map",
+        // Replace YOUR_STYLE_URL with your style URL.
+        style: "mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih",
+        center: [-80.051, 25.485],
+        zoom: 9.14,
+      });
 
-    /* 
+      /* 
 Add an event listener that runs
   when a user clicks on the map element.
 */
-map.on('click', (event) => {
-  // If the user clicked on one of your markers, get its information.
-  const features = map.queryRenderedFeatures(event.point, {
-    layers: ['noteworthy-sites', 'miami', 'national-parks-state-parks-preserves'] // replace with your layer name
-  });
-  if (!features.length) {
-    return;
-  }
-  const feature = features[0];
+      map.on("click", (event) => {
+        // If the user clicked on one of your markers, get its information.
+        const features = map.queryRenderedFeatures(event.point, {
+          layers: [
+            "noteworthy-sites",
+            "miami",
+            "national-parks-state-parks-preserves",
+          ], // replace with your layer name
+        });
+        if (!features.length) {
+          return;
+        }
+        const feature = features[0];
 
-  /* 
+        /* 
     Create a popup, specify its options 
     and properties, and add it to the map.
   */
-const popup = new mapboxgl.Popup({ offset: [0, -15] })
-  .setLngLat(feature.geometry.coordinates)
-  .setHTML(
-    `<img src="{feature.properties.Illustration}" width="200" height="200"><h3>${feature.properties.Name}</h3>`/* <p>${feature.properties.Description}</p>*/
-  )
-  .addTo(map);
-
-});
-
+        const popup = new mapboxgl.Popup({ offset: [0, -15] })
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(
+            `<div class="placeimg"></div><h3>${feature.properties.Name}</h3>` /* <p>${feature.properties.Description}</p>*/
+          )
+          .addTo(map);
+      });
     </script>
   </body>
 </html>
