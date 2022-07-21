@@ -39,18 +39,7 @@ Add an event listener that runs
 map.on('click', (event) => {
   // If the user clicked on one of your markers, get its information.
   const features = map.queryRenderedFeatures(event.point, {
-    layers: ['miami'] // replace with your layer name
-  });
-  if (!features.length) {
-    return;
-  }
-  const feature = features[0];
-  
-  
-  map.on('click', (event) => {
-  // If the user clicked on one of your markers, get its information.
-  const features = map.queryRenderedFeatures(event.point, {
-    layers: ['miami'] // replace with your layer name
+    layers: ['noteworthy-sites', 'miami'] // replace with your layer name
   });
   if (!features.length) {
     return;
@@ -64,11 +53,9 @@ map.on('click', (event) => {
 const popup = new mapboxgl.Popup({ offset: [0, -15] })
   .setLngLat(feature.geometry.coordinates)
   .setHTML(
-    `<h3>${feature.properties.name}</h3><p>${feature.properties.description}</p>`
+    `<h3>${feature.properties.Name}</h3>/* <p>${feature.properties.Description}</p>`
   )
   .addTo(map);
-
-
 
 });
 
