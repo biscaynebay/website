@@ -20,6 +20,7 @@
     </style>
   </head>
   <body>
+    <div><img src="https://ibb.co/GVWzSBq" alt="Girl in a jacket" width="200" height="200" style="position:absolute; margin-top:5px;margin-left:5px;"></div>
     <div id='map'></div>
     <script>
     // The value for 'accessToken' begins with 'pk...'
@@ -53,7 +54,7 @@ map.on('click', (event) => {
 const popup = new mapboxgl.Popup({ offset: [0, -15] })
   .setLngLat(feature.geometry.coordinates)
   .setHTML(
-    `<h3>${feature.properties.Name}</h3>/* <p>${feature.properties.Description}</p>`
+    `<h3>${feature.properties.Name}</h3>`/* <p>${feature.properties.Description}</p>*/
   )
   .addTo(map);
 
