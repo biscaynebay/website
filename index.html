@@ -111,7 +111,7 @@ Add an event listener that runs
         const features = map.queryRenderedFeatures(event.point, {
           layers: [
             "biscayne-bay-parks",
-            "Biscayne Bay Archeological Sites",
+            "biscayne-bay-archeological-sites",
             "biscayne-bay-cultural-institution",
           ], // replace with your layer name
         });
@@ -124,7 +124,7 @@ Add an event listener that runs
     Create a popup, specify its options 
     and properties, and add it to the map.
   */
-        const popup = new mapboxgl.Popup({ offset: [0, -15] })
+        const popup = new mapboxgl.Point(-77, 38); /*new mapboxgl.Popup({ offset: [0, -15] })*/
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
             `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>${feature.properties.description}</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
