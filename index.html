@@ -12,7 +12,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -34,24 +42,23 @@
         
       }
       .mapboxgl-popup-content {
-        position:fixed;
-        bottom: 0;
-  left: 0;
-        font-family: "Quintessential", cursive;
+  
         padding: 0;
       width: 400px;
       }
       .mapboxgl-popup-content p {
         margin: 0;
         padding: 10px;
-        font-family: Verdana;
+        font-family: "Barlow", sans-serif;
       }
       .mapboxgl-popup-content h3 {
+        font-family: "Italianno", cursive;
+        font-size:3em;
         background: #ffffff;
         color: #78553a;
         margin: 0;
         padding: 10px;
-        font-weight: 700;
+        font-weight: 400;
         margin-top: -15px;
       }
       .mapboxgl-popup-content h4 {
@@ -76,7 +83,7 @@
       }
       
       .viewmore {
-        font-family: "Quintessential", cursive;
+        font-family: "Merriweather", serif;
         background-color: #78553a;
   border: none;
   color: white;
@@ -128,10 +135,10 @@ Add an event listener that runs
     and properties, and add it to the map. 
 */
   
-        const popup = new mapboxgl.Popup({ offset: [0, 0] })
+        const popup = new mapboxgl.Popup({ offset: [0, -2] })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
-            `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>${feature.properties.description}</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
+            `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
           )
           .addTo(map);
       });
