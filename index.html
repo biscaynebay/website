@@ -28,6 +28,7 @@
       }
       .mapboxgl-popup {
         padding-bottom: 50px;
+        
       }
 
       .mapboxgl-popup-close-button {
@@ -37,6 +38,7 @@
         font-family: "Quintessential", cursive;
         padding: 0;
         width: 400px;
+      
       }
       .mapboxgl-popup-content p {
         margin: 0;
@@ -122,9 +124,10 @@ Add an event listener that runs
 
         /* 
     Create a popup, specify its options 
-    and properties, and add it to the map.
-  */
-        const popup = new mapboxgl.Point(-77, 38); /*new mapboxgl.Popup({ offset: [0, -15] })*/
+    and properties, and add it to the map. 
+*/
+  
+        const popup = new mapboxgl.Popup({ offset: [0, 0] })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
             `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>${feature.properties.description}</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
