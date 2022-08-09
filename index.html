@@ -110,9 +110,9 @@ Add an event listener that runs
         // If the user clicked on one of your markers, get its information.
         const features = map.queryRenderedFeatures(event.point, {
           layers: [
-            "noteworthy-sites",
-            "miami",
-            "national-parks-state-parks-preserves",
+            "biscayne-bay-parks",
+            "Biscayne Bay Archeological Sites",
+            "biscayne-bay-cultural-institution",
           ], // replace with your layer name
         });
         if (!features.length) {
@@ -127,7 +127,7 @@ Add an event listener that runs
         const popup = new mapboxgl.Popup({ offset: [0, -15] })
           .setLngLat(feature.geometry.coordinates)
           .setHTML(
-            `<div class="placeimg"></div><h3>${feature.properties.Name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec aliquam turpis, sed laoreet urna. Proin lectus neque, scelerisque a euismod sed, viverra at tortor. Etiam bibendum et risus ut convallis. Donec porta euismod arcu, ac suscipit nibh hendrerit id. Morbi lacinia lectus et lacus tempor, vitae suscipit elit finibus.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>` /* <p>${feature.properties.Description}</p>*/
+            `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>${feature.properties.description}</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
           )
           .addTo(map);
       });
