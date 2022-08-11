@@ -1,152 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Biscayne Bay</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
-    <link
-      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-      }
-      .mapboxgl-popup {
-        padding-bottom: 50px;
-      }
+<head>
+  <meta charset="utf-8" />
 
-      .mapboxgl-popup-close-button {
-        
-      }
-      .mapboxgl-popup-content {
-        padding: 0;
-      width: 400px;
-        background-color: #f8f6f1;
-      }
-      .mapboxgl-popup-content p {
-        margin: 0;
-        padding: 10px;
-        font-family: "Barlow", sans-serif;
-        text-align:center;
-      }
-      .mapboxgl-popup-content h3 {
-        font-family: "Italianno", cursive;
-        font-size:3em;
-        text-align:center;
-        line-height:1em;
-        background: #ffffff;
-        color: #78553a;
-        padding: 10px;
-        font-weight: 400;
-        margin:0;
-        background-color: #f8f6f1;
-      }
-      .mapboxgl-popup-content h4 {
-        margin: 0;
-        padding: 10px;
-        font-weight: 400;
-      }
+  <title>Biscayne Bay</title>
 
-      .mapboxgl-popup-content div {
-        padding: 10px;
-      }
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"    />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"       />
+  <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"  />
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
-      .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
-        margin-top: 15px;
-      }
+  <style>
 
-      .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
-        border-bottom-color: #ffffff; display:none;
-      }
-      
-      .placeimg {width:380px; height:200px;
-        background-image: url("https://i.ibb.co/h9B6rph/cape-florida-sample.jpg");
-  background-repeat: no-repeat, repeat;
-      }
-      
-      .viewmore {
-        font-family: "Merriweather", serif;
-        background-color: #78553a;
-  border: none;
-  color: white;
-  margin: 10px;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1em;
-        position:relative;
-      }
-      .viewmore:hover{background-color: #9d7d3f;}
-      
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      // The value for 'accessToken' begins with 'pk...'
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ";
-      const map = new mapboxgl.Map({
-        container: "map",
-        // Replace YOUR_STYLE_URL with your style URL.
-        style: "mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih",
-        center: [-80.221, 25.618],
-        zoom: 9.42,
+    body {
+      margin  : 0;
+      padding : 0;
+    }
+
+    #map {
+      position : absolute;
+      width    : 100%;
+      top      : 0;
+      bottom   : 0;
+    }
+
+    .mapboxgl-popup {
+      padding-bottom: 50px;
+    }
+
+    .mapboxgl-popup-content {
+      width            : 400px;
+      padding          : 0;
+      background-color : #f8f6f1;
+    }
+
+    .mapboxgl-popup-content p {
+      margin      : 0;
+      padding     : 10px;
+      font-family : "Barlow", sans-serif;
+      text-align  : center;
+    }
+
+    .mapboxgl-popup-content h3 {
+      font-weight      : 400;
+      margin           : 0;
+      font-family      : "Italianno", cursive;
+      font-size        : 3em;
+      text-align       : center;
+      line-height      : 1em;
+      background       : #ffffff;
+      color            : #78553a;
+      padding          : 10px;
+      background-color : #f8f6f1;
+    }
+
+    .mapboxgl-popup-content h4 {
+      margin      : 0;
+      padding     : 10px;
+      font-weight : 400;
+    }
+
+    .mapboxgl-popup-content div {
+      padding : 10px;
+    }
+
+    .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+      margin-top : 15px;
+    }
+
+    .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+      display             : none;
+      border-bottom-color : #ffffff; 
+    }
+
+    .placeimg {width:380px; height:200px;
+      background-image  : url("https://i.ibb.co/h9B6rph/cape-florida-sample.jpg");
+      background-repeat : no-repeat, repeat;
+    }
+
+    .viewmore {
+      position         : relative;
+      margin           : 10px;
+      padding          : 15px 32px;
+      font-family      : "Merriweather", serif;
+      background-color : #78553a;
+      border           : none;
+      text-align       : center;
+      text-decoration  : none;
+      font-size        : 1em;
+      color            : white;
+    }
+
+    .viewmore:hover{
+      background-color : #9d7d3f;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
+
+    const map = new mapboxgl.Map({
+      container : 'map',
+      style     : 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
+      center    : [-80.221, 25.618],
+      zoom      : 9.42,
+    });
+
+    map.on('click', (e) => {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: [
+          'biscayne-bay-parks',
+          'biscayne-bay-archeological-sites',
+          'biscayne-bay-cultural-institution',
+        ],
       });
-
-      /* 
-Add an event listener that runs
-  when a user clicks on the map element.
-*/
-      map.on("click", (event) => {
-        // If the user clicked on one of your markers, get its information.
-        const features = map.queryRenderedFeatures(event.point, {
-          layers: [
-            "biscayne-bay-parks",
-            "biscayne-bay-archeological-sites",
-            "biscayne-bay-cultural-institution",
-          ], // replace with your layer name
-        });
-        if (!features.length) {
-          return;
-        }
-        const feature = features[0];
-
-        /* 
-    Create a popup, specify its options 
-    and properties, and add it to the map. 
-*/
-  
-        const popup = new mapboxgl.Popup({ offset: [0, -2] })
-          .setLngLat(feature.geometry.coordinates)
-          .setHTML(
-            `<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`
-          )
-          .addTo(map);
-      });
-    </script>
-  </body>
+      if (!features.length) {
+        return;
+      }
+      const feature = features[0];
+      const popup = new mapboxgl.Popup({offset: [0, -2]})
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(`<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`)
+        .addTo(map);
+    });
+  </script>
+</body>
 </html>
