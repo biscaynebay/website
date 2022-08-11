@@ -22,10 +22,20 @@
     }
 
     #map {
-      position : absolute;
-      width    : 100%;
+      position : fixed;
       top      : 0;
+      left     : 0;
+      right    : 0;
       bottom   : 0;
+    }
+
+    #drawer {
+      position : fixed;
+      top      : 0;
+      left     : 100px;
+      right    : 0;
+      bottom   : 0;
+      background-color : #FFFFFF;
     }
 
     .mapboxgl-popup {
@@ -102,9 +112,16 @@
   </style>
 </head>
 <body>
+  <div id="drawer"></div>
   <div id="map"></div>
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
+
+    layers = [
+      'biscayne-bay-parks',
+      'biscayne-bay-archeological-sites',
+      'biscayne-bay-cultural-institution'
+    ];
 
     const map = new mapboxgl.Map({
       container : 'map',
@@ -114,21 +131,9 @@
     });
 
     map.on('click', (e) => {
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: [
-          'biscayne-bay-parks',
-          'biscayne-bay-archeological-sites',
-          'biscayne-bay-cultural-institution',
-        ],
-      });
-      if (!features.length) {
-        return;
-      }
-      const feature = features[0];
-      const popup = new mapboxgl.Popup({offset: [0, -2]})
-        .setLngLat(feature.geometry.coordinates)
-        .setHTML(`<div class="placeimg">${feature.properties.heroimg}</div><h3>${feature.properties.name}</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.</p><button class="viewmore" onclick="window.location.href='#';">View More</button>`)
-        .addTo(map);
+      const feature = map.queryRenderedFeatures(e.point, {layers: layers})[0];
+      console.log('feature', feature)
+      // launch side panel here
     });
   </script>
 </body>
