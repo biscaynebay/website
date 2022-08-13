@@ -230,7 +230,7 @@
   <div class="compass"></div>
   <div id="map"></div>
   <script>
-  var lorem = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
+  var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
   /// utils ////////////////////////////////////////////////////////////////////
 
   const removeChildren = (node) => {
@@ -240,7 +240,7 @@
   }
   const drawer = (title, image, body) => {
     elem = document.createElement('div');
-    elem.className = "drawer"
+    elem.className = 'drawer'
     const markup = `
     <div class="drawer-header">
       <button type="button" class="btn-close" aria-label="Close"></button>
@@ -257,7 +257,7 @@
   }
   const largeView = (title, image, body) => {
     elem = document.createElement('div');
-    elem.className = "lgview"
+    elem.className = 'lgview'
     const markup = `
     <div class="drawer-header">
       <button type="button" class="btn-close" aria-label="Close"></button>
@@ -307,13 +307,13 @@
   map.on('click', (e) => {
     removeChildren(container);
     for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
-      var title = feature.properties.name
-      var image = "https://i.ibb.co/h9B6rph/cape-florida-sample.jpg"
-      var body = lorem
-      var dr = drawer(title,image,body)
+      const title = feature.properties.name;
+      const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
+      const body  = lorem;
+      const dr = drawer(title,image,body);
       dr.addEventListener('click', (e) =>{
         if (e.target.classList.contains('view-more') || (e.target.classList.contains('location-img'))) {
-          showMore(title,image,lorem)// image, body)
+          showMore(title,image,body);
         }
         if (e.target.classList.contains('btn-close')){
           removeChildren(container)
@@ -325,8 +325,8 @@
 
   map.on('rotate', (e)=>{
     var d = -map.getBearing()
-    var compass = document.getElementsByClassName("compass")[0];
-    compass.style.transform = "rotate("+d+"deg)";
+    var compass = document.getElementsByClassName('compass')[0];
+    compass.style.transform = 'rotate("+d+"deg)';
   })
 
   </script>
