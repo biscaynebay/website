@@ -197,7 +197,7 @@
     justify-content: flex-end
   }
 
-  .btn-close {
+  .button {
     box-sizing: content-box;
     width: 2em;
     height: 2em;
@@ -231,36 +231,40 @@
   <div id="map"></div>
   <script>
   var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
+
   /// utils ////////////////////////////////////////////////////////////////////
 
   const removeChildren = (node) => {
-    for (child of node.childNodes) {
-      node.removeChild(child);
+    console.log('node', node.childNodes.length)
+    while (node.childNodes.length > 0) {
+      node.removeChild(node.childNodes[0]);
     }
-  }
-  const drawer = (title, image, body) => {
+  };
+
+  const Drawer = (title, image, body) => {
     elem = document.createElement('div');
     elem.className = 'drawer'
     const markup = `
     <div class="drawer-header">
-      <button type="button" class="btn-close" aria-label="Close"></button>
+      <button type="button" id="drawer-close" class="button"></button>
     </div>
-    <img class="location-img" src="${image}">
+    <img id="location-image" class="location-img" src="${image}">
     <h3 id="location-title">${title}</h3>
     <p id="location-body">${body}</p>
     <div class="button-container">
-      <button class="view-more">View More</button>
+      <button id="detail-open" class="view-more">View More</button>
     </div>
     `;
     elem.innerHTML = markup;
     return elem;
-  }
-  const largeView = (title, image, body) => {
+  };
+
+  const Detail = (title, image, body) => {
     elem = document.createElement('div');
     elem.className = 'lgview'
     const markup = `
     <div class="drawer-header">
-      <button type="button" class="btn-close" aria-label="Close"></button>
+      <button type="button" id="detail-close" class="button"></button>
     </div>
     <img class="location-img-lg" src="${image}">
     <h3 id="location-title">${title}</h3>
@@ -268,7 +272,8 @@
     `;
     elem.innerHTML = markup;
     return elem;
-  }
+  };
+
   /// configs //////////////////////////////////////////////////////////////////
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
@@ -289,45 +294,38 @@
     container = document.createElement('div');
     document.body.appendChild(container);
 
-
-
-
   /// handler //////////////////////////////////////////////////////////////////
-
-  const showMore = (title, image, body)=>{
-    view = largeView(title, image, body)
-    view.addEventListener('click', (e) =>{
-      if (e.target.classList.contains('btn-close')){
-        container.removeChild(e.currentTarget)
-      }
-    });
-    container.appendChild(view)
-  }
 
   map.on('click', (e) => {
     removeChildren(container);
     for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
-      const title = feature.properties.name;
       const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
-      const body  = lorem;
-      const dr = drawer(title,image,body);
-      dr.addEventListener('click', (e) =>{
-        if (e.target.classList.contains('view-more') || (e.target.classList.contains('location-img'))) {
-          showMore(title,image,body);
-        }
-        if (e.target.classList.contains('btn-close')){
-          removeChildren(container)
-        }
+      const drawer = Drawer(feature.properties.name, image, lorem);
+      drawer.addEventListener('click', (e) => {
+         console.log('drawer clicked', e)
+        if (e.target.id === 'detail-open' || e.target.id === 'location-image') {
+          const detail = Detail(feature.properties.name, image, lorem);
+          detail.addEventListener('click', (e) => {
+            if (e.target.id === 'detail-close') {
+              container.removeChild(e.currentTarget)
+            };
+          });
+          container.appendChild(detail)
+        };
+        if (e.target.id === 'drawer-close') {
+          console.log('removing', container.children);
+          removeChildren(container);
+        };
       });
-      container.appendChild(dr)
-    }
+      container.appendChild(drawer);
+    };
   });
 
   map.on('rotate', (e)=>{
-    var d = -map.getBearing()
-    var compass = document.getElementsByClassName('compass')[0];
-    compass.style.transform = 'rotate("+d+"deg)';
-  })
+    const direction = map.getBearing()
+    const compass   = document.getElementsByClassName('compass')[0];
+    compass.style.transform = 'rotate(' + direction + 'deg)';
+  });
 
   </script>
 </body>
