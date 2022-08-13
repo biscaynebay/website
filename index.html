@@ -160,13 +160,13 @@
   .location-img {
     width: 380px;
     height: 200px;
-    background-image: url("https://i.ibb.co/h9B6rph/cape-florida-sample.jpg");
-    background-repeat: no-repeat, repeat;
+    object-fit:contain;
   }
 
   .location-img-lg {
     width: 80%;
     height: 80%;
+    object-fit:cover;
   }
 
   .button-container {
@@ -245,9 +245,9 @@
     <div class="drawer-header">
       <button type="button" class="btn-close" aria-label="Close"></button>
     </div>
-    <div class="location-img"></div>
+    <img class="location-img" src="${image}">
     <h3 id="location-title">${title}</h3>
-    <p id="location-body">${lorem}</p>
+    <p id="location-body">${body}</p>
     <div class="button-container">
       <button class="view-more">View More</button>
     </div>
@@ -262,7 +262,7 @@
     <div class="drawer-header">
       <button type="button" class="btn-close" aria-label="Close"></button>
     </div>
-    <img class="location-img-lg" src="https://i.ibb.co/h9B6rph/cape-florida-sample.jpg">
+    <img class="location-img-lg" src="${image}">
     <h3 id="location-title">${title}</h3>
     <p id="location-body">${body}</p>
     `;
@@ -308,10 +308,12 @@
     removeChildren(container);
     for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
       var title = feature.properties.name
-      var dr = drawer(title)
+      var image = "https://i.ibb.co/h9B6rph/cape-florida-sample.jpg"
+      var body = lorem
+      var dr = drawer(title,image,body)
       dr.addEventListener('click', (e) =>{
-        if (e.target.classList.contains('view-more')){
-          showMore(title,"",lorem)// image, body)
+        if (e.target.classList.contains('view-more') || (e.target.classList.contains('location-img'))) {
+          showMore(title,image,lorem)// image, body)
         }
         if (e.target.classList.contains('btn-close')){
           removeChildren(container)
