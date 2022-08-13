@@ -17,24 +17,22 @@
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
   <style>
- /* Works on Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #CFBBA0 #f8f6f1;
-}
+   /* Works on Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #CFBBA0 #f8f6f1;
+  }
 
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 15px;
-}
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 15px;
+  }
 
-
-*::-webkit-scrollbar-thumb {
-  background-color: #CFBBA0;
-  border-radius: 5px;
-  border: 6px solid #f8f6f1;
-}
-
+  *::-webkit-scrollbar-thumb {
+    background-color: #CFBBA0;
+    border-radius: 5px;
+    border: 6px solid #f8f6f1;
+  }
 
   #map {
     position: fixed;
@@ -73,15 +71,16 @@
     width: 400px;
     height: 100vh;
     background-color: #f8f6f1;
-    left: -400px;
+    left: 0px;
     top: 0;
     position: fixed;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .6);
     transition: all 200ms ease-in-out;
     z-index: 99;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     overflow-y: auto;
   }
+
 
   .drawer .div {
     padding: 10px;
@@ -113,11 +112,61 @@
     font-weight: 400;
   }
 
-  .location_img {
+  .lgview {
+    width: 100% - 400px;
+    height: 100vh;
+    background-color: #f8f6f1;
+    left: 400px;
+    top: 0;
+    position: fixed;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .6);
+    transition: all 200ms ease-in-out;
+    z-index: 99;
+    /*overflow-x: hidden;*/
+    overflow-y: auto;
+  }
+  .lgview .div {
+    padding: 10px;
+  }
+
+  .lgview p {
+    margin: 0;
+    padding: 15px;
+    font-family: "Barlow", sans-serif;
+    text-align: center;
+  }
+
+  .lgview h3 {
+    font-weight: 400;
+    margin: 0;
+    font-family: "Italianno", cursive;
+    font-size: 3em;
+    text-align: center;
+    line-height: 1em;
+    background: #ffffff;
+    color: #78553a;
+    padding: 10px;
+    background-color: #f8f6f1;
+  }
+
+  .lgview h4 {
+    margin: 0;
+    padding: 10px;
+    font-weight: 400;
+  }
+
+
+
+  .location-img {
     width: 380px;
     height: 200px;
     background-image: url("https://i.ibb.co/h9B6rph/cape-florida-sample.jpg");
     background-repeat: no-repeat, repeat;
+  }
+
+  .location-img-lg {
+    width: 80%;
+    height: 80%;
   }
 
   .button-container {
@@ -126,7 +175,7 @@
     align-items: center;
   }
 
-  .view_more {
+  .view-more {
     margin: 0 auto;
     padding: 15px 32px;
     font-family: "Merriweather", serif;
@@ -139,7 +188,7 @@
     margin: 10px;
   }
 
-  .view_more:hover {
+  .view-more:hover {
     background-color: #9d7d3f;
   }
 
@@ -178,67 +227,55 @@
 </head>
 
 <body>
-  <div class="overlay"></div>
-  <div class="drawer">
-    <div class="drawer-header">
-      <button type="button" class="btn-close" aria-label="Close" onclick="closeButton()"></button>
-    </div>
-
-    <div class="location_img"></div>
-    <h3 id="location_title">Test</h3>
-    <p id="location_body">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu
-      ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus
-      porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu
-      ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus
-      porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu
-      ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus
-      porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu
-      ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus
-      porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcu
-      ullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus
-      porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.
-
-    </p>
-    <div class="button-container">
-      <button class="view_more" onclick="window.location.href='#';">View More</button>
-    </div>
-  </div>
-
-  <main>
-    <div class="compass"></div>
-    <div id="map"></div>
-  </main>
-
+  <div class="compass"></div>
+  <div id="map"></div>
   <script>
-    function closeButton(){
-      document.body.classList.remove("show-drawer");
+  var lorem = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
+  /// utils ////////////////////////////////////////////////////////////////////
+
+  const removeChildren = (node) => {
+    for (child of node.childNodes) {
+      node.removeChild(child);
     }
-    window.addEventListener("click", event => {
-      if (event.target.className == "overlay") {
-        document.body.classList.remove("show-drawer");
-      }
-    });
-    window.addEventListener("mousedown", event => {
-      if (event.target.className == "overlay") {
-        document.body.classList.remove("show-drawer");
-      }
-    });
-  </script>
-  <script>
+  }
+  const drawer = (title, image, body) => {
+    elem = document.createElement('div');
+    elem.className = "drawer"
+    const markup = `
+    <div class="drawer-header">
+      <button type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+    <div class="location-img"></div>
+    <h3 id="location-title">${title}</h3>
+    <p id="location-body">${lorem}</p>
+    <div class="button-container">
+      <button class="view-more">View More</button>
+    </div>
+    `;
+    elem.innerHTML = markup;
+    return elem;
+  }
+  const largeView = (title, image, body) => {
+    elem = document.createElement('div');
+    elem.className = "lgview"
+    const markup = `
+    <div class="drawer-header">
+      <button type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+    <img class="location-img-lg" src="https://i.ibb.co/h9B6rph/cape-florida-sample.jpg">
+    <h3 id="location-title">${title}</h3>
+    <p id="location-body">${body}</p>
+    `;
+    elem.innerHTML = markup;
+    return elem;
+  }
+  /// configs //////////////////////////////////////////////////////////////////
+
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    layers = [
-      'biscayne-bay-parks',
-      'biscayne-bay-archeological-sites',
-      'biscayne-bay-cultural-institution'
-    ];
+    layers = ['biscayne-bay-parks', 'biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution'];
     const bounds = [
-         [-81.512, 24.621], // Southwest coordinates
-         [-79.358, 27.647] // Northeast coordinates
+         [-81.51223172286319, 24.621290094170632], // Southwest coordinates
+         [-79.35826265105771, 27.64779362822521] // Northeast coordinates
      ];
 
     const map = new mapboxgl.Map({
@@ -248,33 +285,50 @@
       zoom: 9.42,
       maxBounds: bounds
     });
-    /*
-    =================
-    This is an option
-    =================
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, 'bottom-right');*/
-    map.on('rotate', (e)=>{
-      var d = -map.getBearing()
-      var compass = document.getElementsByClassName("compass")[0];
-      compass.style.transform = "rotate("+d+"deg)";
 
-    })
-    map.on('click', (e) => {
-      const feature = map.queryRenderedFeatures(e.point, {layers: layers})[0];
-      console.log('feature', feature);
-      if (feature) {
-        //document.getElementsByClassName("location_img")[0].style.backgroundImage = 'url('+feature.properties.heroimg+')';
-        document.getElementById("location_title").innerHTML = feature.properties.name;
-        //document.getElementById("location_body").innerHTML  = feature.properties.name;
-        document.body.classList.toggle("show-drawer");
-      } else {
-        document.body.classList.remove("show-drawer");
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+
+
+
+  /// handler //////////////////////////////////////////////////////////////////
+
+  const showMore = (title, image, body)=>{
+    view = largeView(title, image, body)
+    view.addEventListener('click', (e) =>{
+      if (e.target.classList.contains('btn-close')){
+        container.removeChild(e.currentTarget)
       }
-
     });
+    container.appendChild(view)
+  }
+
+  map.on('click', (e) => {
+    removeChildren(container);
+    for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
+      var title = feature.properties.name
+      var dr = drawer(title)
+      dr.addEventListener('click', (e) =>{
+        if (e.target.classList.contains('view-more')){
+          showMore(title,"",lorem)// image, body)
+        }
+        if (e.target.classList.contains('btn-close')){
+          removeChildren(container)
+        }
+      });
+      container.appendChild(dr)
+    }
+  });
+
+  map.on('rotate', (e)=>{
+    var d = -map.getBearing()
+    var compass = document.getElementsByClassName("compass")[0];
+    compass.style.transform = "rotate("+d+"deg)";
+  })
 
   </script>
+</body>
 </body>
 
 </html>
