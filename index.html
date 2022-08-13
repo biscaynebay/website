@@ -221,7 +221,6 @@
       url("https://i.ibb.co/89zKmhr/u-http-www-pngall-com-wp-content-uploads-2017-03-Compass-Transparent.png");
     background-repeat: no-repeat, repeat;
     background-size: cover;
-    background-color: #CFBBA0;
   }
   </style>
 </head>
@@ -320,9 +319,13 @@
       container.appendChild(drawer);
     };
   });
-
+  map.on('mousemove', function (e) {
+    const features = map.queryRenderedFeatures(e.point);
+    console.log(features)
+    map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+  });
   map.on('rotate', (e)=>{
-    const direction = map.getBearing()
+    const direction = -map.getBearing()
     const compass   = document.getElementsByClassName('compass')[0];
     compass.style.transform = 'rotate(' + direction + 'deg)';
   });
