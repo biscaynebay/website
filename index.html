@@ -240,7 +240,7 @@
       background-color: green;
     }
     .legend-btn:hover{
-      background-color: greenyellow;
+      background-color: white;
     }
     </style>
 </head>
@@ -323,20 +323,18 @@
 
     const toggle = (target)=>{
       const id = target.id
-      //const visibility = map.getLayoutProperty(id,'visibility');
+      //const visibility = map.getLayoutProperty(id,'visibility');  ////requires map.loaded
       const visibility = target.classList.contains('active');
-          console.log("VISIBILITY====>",visibility,id)
-          if (visibility) {
-            map.setLayoutProperty(id, 'visibility', 'none');
-            target.classList.remove('active');
-          } else {
-            map.setLayoutProperty(id,'visibility','visible');
-            target.classList.add('active');
-          }
+      if (visibility) {
+        map.setLayoutProperty(id, 'visibility', 'none');
+        target.classList.remove('active');
+      } else {
+        map.setLayoutProperty(id,'visibility','visible');
+        target.classList.add('active');
+      }
     }
 
-    map.on('idle', (e)=>{
-      document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
+    document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
         console.log("parks")
         toggle(e.target)
       })
@@ -348,8 +346,6 @@
         console.log("inst")
         toggle(e.target)
       })
-
-    })
 
   map.on('click', (e) => {
 
