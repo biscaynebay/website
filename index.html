@@ -44,27 +44,10 @@
     margin: 5px;
   }
 
-  .overlay {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, .3);
-    z-index: 90;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 200ms ease-in;
-  }
 
   /* Show Nav */
   .show-drawer .drawer {
     left: 0;
-  }
-
-  .show-drawer .overlay {
-    opacity: 1;
-    visibility: visible;
   }
 
   /* Styling the content */
@@ -78,7 +61,6 @@
     position: fixed;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .6);
     transition: all 200ms ease-in-out;
-    z-index: 99;
     /*overflow-x: hidden;*/
     overflow-y: auto;
   }
@@ -123,7 +105,6 @@
     position: fixed;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .6);
     transition: all 200ms ease-in-out;
-    z-index: 99;
     /*overflow-x: hidden;*/
     overflow-y: auto;
   }
@@ -214,7 +195,6 @@
     position: fixed;
     bottom: 40px;
     right: 30px;
-    z-index: 1;
     width: 50px;
     height: 50px;
     padding: 50px;
@@ -225,7 +205,6 @@
   }
     #legend {
     position: absolute;
-    z-index: 1;
     top: 10px;
     right: 10px;
     height: 200px;
@@ -388,12 +367,12 @@
   </script>
 </head>
 <body>
+  <div id="map"></div>
   <div id="legend">
-    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" ></span>  Archeological Sites   </div>
+    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" ></span>  Archeological Sites   </p>
     <p onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active"></span>  Cultural Institutions</p>
     <p onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active"></span>  Parks                 </span> </p>
   </div>
   <div id='compass' class="compass"></div>
-  <div id="map"></div>
 </body>
 </html>
