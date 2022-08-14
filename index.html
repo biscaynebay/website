@@ -223,8 +223,6 @@
     background-repeat: no-repeat, repeat;
     background-size: cover;
   }
-  </style>
-  <style>
     #legend {
     position: absolute;
     z-index: 1;
@@ -250,6 +248,7 @@
       vertical-align: middle !important;
       margin-right: 5px;
       margin-bottom: 5px;
+      cursor: pointer;
     }
     .parks.active{
       background-color: #8C8B52;
@@ -263,37 +262,52 @@
     .legend-btn:hover{
       background-color: white;
     }
-
     .active{
       background-color: green;
     }
     .active:hover{
       background-color: white;
     }
-
-
-
-    </style>
-</head>
-
-<body>
-  <nav id="legend">
-    <p> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks                 </span> </p>
-    <p> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
-    <p> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
-  </nav>
-  <div class="compass"></div>
-  <div id="map"></div>
+  </style>
   <script>
   var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
 
   /// utils ////////////////////////////////////////////////////////////////////
 
-  const removeChildren = (node) => {
-    console.log('node', node.childNodes.length)
-    while (node.childNodes.length > 0) {
-      node.removeChild(node.childNodes[0]);
+  const removeChildren = (elem) => {
+    while (elem.childNodes.length > 0) {
+      elem.removeChild(elem.childNodes[0]);
     }
+  };
+
+  const toggleVisibility = (elem) => {
+    elem.style.visibility === 'visible' ? elem.style.visibility = 'hidden' : elem.style.visibility = 'visible';
+  };
+
+  /// configs //////////////////////////////////////////////////////////////////
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
+    layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks'];
+    const bounds = [
+         [-81.51223172286319, 24.621290094170632], // Southwest coordinates
+         [-79.35826265105771, 27.64779362822521] // Northeast coordinates
+     ];
+
+  /// views ////////////////////////////////////////////////////////////////////
+
+  const Detail = (title, image, body) => {
+    elem = document.createElement('div');
+    elem.className = 'lgview'
+    const markup = `
+    <div class="drawer-header">
+      <button type="button" id="detail-close" class="button"></button>
+    </div>
+    <img class="location-img-lg" src="${image}">
+    <h3 id="location-title">${title}</h3>
+    <p id="location-body">${body}</p>
+    `;
+    elem.innerHTML = markup;
+    return elem;
   };
 
   const Drawer = (title, image, body) => {
@@ -314,31 +328,16 @@
     return elem;
   };
 
-  const Detail = (title, image, body) => {
-    elem = document.createElement('div');
-    elem.className = 'lgview'
-    const markup = `
-    <div class="drawer-header">
-      <button type="button" id="detail-close" class="button"></button>
-    </div>
-    <img class="location-img-lg" src="${image}">
-    <h3 id="location-title">${title}</h3>
-    <p id="location-body">${body}</p>
-    `;
-    elem.innerHTML = markup;
-    return elem;
-  };
+  /// init ////////////////////////////////////////////////////////////////////
 
-  /// configs //////////////////////////////////////////////////////////////////
+  var map;
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks'];
-    const bounds = [
-         [-81.51223172286319, 24.621290094170632], // Southwest coordinates
-         [-79.35826265105771, 27.64779362822521] // Northeast coordinates
-     ];
+  document.addEventListener('DOMContentLoaded', (_) => {
 
-    const map = new mapboxgl.Map({
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
       center: [-80.221, 25.618],
@@ -346,75 +345,55 @@
       maxBounds: bounds
     });
 
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    map.on('click', (e) => {
+      removeChildren(container);
+      for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
+        const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
+        const drawer = Drawer(feature.properties.name, image, lorem);
+        drawer.addEventListener('click', (e) => {
+           console.log('drawer clicked', e)
+          if (e.target.id === 'detail-open' || e.target.id === 'location-image') {
+            const detail = Detail(feature.properties.name, image, lorem);
+            detail.addEventListener('click', (e) => {
+              if (e.target.id === 'detail-close') {
+                container.removeChild(e.currentTarget)
+              };
+            });
+            container.appendChild(detail)
+          };
+          if (e.target.id === 'drawer-close') {
+            console.log('removing', container.children);
+            removeChildren(container);
+          };
+        });
+        container.appendChild(drawer);
+      };
+    });
 
-  /// handler //////////////////////////////////////////////////////////////////
+    map.on('mousemove', function (e) {
+      const features = map.queryRenderedFeatures(e.point, {layers: layers});
+      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+    });
 
+    map.on('rotate', (e)=>{
+      const direction = -map.getBearing()
+      const compass   = document.getElementsByClassName('compass')[0];
+      compass.style.transform = 'rotate(' + direction + 'deg)';
+    });
 
-  const toggle = (target)=>{
-    const id = target.id
-    //const visibility = map.getLayoutProperty(id,'visibility');  ////requires map.loaded
-    const visibility = target.classList.contains('active');
-    if (visibility) {
-      map.setLayoutProperty(id, 'visibility', 'none');
-      target.classList.remove('active');
-    } else {
-      map.setLayoutProperty(id,'visibility','visible');
-      target.classList.add('active');
-    }
-  }
-
-  document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
-      console.log("parks")
-      toggle(e.target)
-    })
-    document.getElementById('biscayne-bay-archeological-sites').addEventListener('click', (e)=>{
-      console.log("sites")
-      toggle(e.target)
-    })
-    document.getElementById('biscayne-bay-cultural-institution').addEventListener('click', (e)=>{
-      console.log("inst")
-      toggle(e.target)
-    })
-
-  map.on('click', (e) => {
-
-    removeChildren(container);
-    for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
-      const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
-      const drawer = Drawer(feature.properties.name, image, lorem);
-      drawer.addEventListener('click', (e) => {
-         console.log('drawer clicked', e)
-        if (e.target.id === 'detail-open' || e.target.id === 'location-image') {
-          const detail = Detail(feature.properties.name, image, lorem);
-          detail.addEventListener('click', (e) => {
-            if (e.target.id === 'detail-close') {
-              container.removeChild(e.currentTarget)
-            };
-          });
-          container.appendChild(detail)
-        };
-        if (e.target.id === 'drawer-close') {
-          console.log('removing', container.children);
-          removeChildren(container);
-        };
-      });
-      container.appendChild(drawer);
-    };
   });
-  map.on('mousemove', function (e) {
-    const features = map.queryRenderedFeatures(e.point, {layers: layers});
-    map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-  });
-  map.on('rotate', (e)=>{
-    const direction = -map.getBearing()
-    const compass   = document.getElementsByClassName('compass')[0];
-    compass.style.transform = 'rotate(' + direction + 'deg)';
-  });
+
+  const toggleLayer = (map, id) => map.setLayoutProperty(id, map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');
 
   </script>
+</head>
+<body>
+  <div id="legend">
+    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" ></span>  Archeological Sites   </div>
+    <p onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active"></span>  Cultural Institutions</p>
+    <p onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active"></span>  Parks                 </span> </p>
+  </div>
+  <div id='compass' class="compass"></div>
+  <div id="map"></div>
 </body>
-</body>
-
 </html>
