@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" />
   <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css" integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous">
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
   <style>
@@ -40,6 +39,9 @@
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  p{
+    margin: 5px;
   }
 
   .overlay {
@@ -223,33 +225,62 @@
   }
   </style>
   <style>
-    #menu {
+    #legend {
     position: absolute;
     z-index: 1;
     top: 10px;
     right: 10px;
-    font-family: 'Open Sans', sans-serif;
-    }
+    height: 200px;
+    font-family: "Italianno", cursive;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
 
-    .legend-btn{
-      padding:25px;
-      border-radius: 25px;
-      background-color: red;
     }
-    .active{
-      background-color: green;
+    #legend p{
+      font-size: 20px;
+      color: #433624;
+    }
+    .legend-btn{
+      width:25px;
+      height:25px;
+      border-radius: 25px;
+      background-color: lightgray;
+      display: inline-block;
+      vertical-align: middle !important;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    .parks.active{
+      background-color: #8C8B52;
+    }
+    .sites.active{
+      background-color: #433624;
+    }
+    .institutes.active{
+      background-color: #CFBBA0;
     }
     .legend-btn:hover{
       background-color: white;
     }
+
+    .active{
+      background-color: green;
+    }
+    .active:hover{
+      background-color: white;
+    }
+
+
+
     </style>
 </head>
 
 <body>
-  <nav id="menu">
-    <div class="legend-btn active" id="biscayne-bay-parks"></div>
-    <div class="legend-btn active" id="biscayne-bay-archeological-sites"></div>
-    <div class="legend-btn active" id="biscayne-bay-cultural-institution"></div>
+  <nav id="legend">
+    <p> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks                 </span> </p>
+    <p> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
+    <p> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
   </nav>
   <div class="compass"></div>
   <div id="map"></div>
