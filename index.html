@@ -222,9 +222,35 @@
     background-size: cover;
   }
   </style>
+  <style>
+    #menu {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    font-family: 'Open Sans', sans-serif;
+    }
+
+    .legend-btn{
+      padding:25px;
+      border-radius: 25px;
+      background-color: red;
+    }
+    .active{
+      background-color: green;
+    }
+    .legend-btn:hover{
+      background-color: greenyellow;
+    }
+    </style>
 </head>
 
 <body>
+  <nav id="menu">
+    <div class="legend-btn active" id="biscayne-bay-parks"></div>
+    <div class="legend-btn active" id="biscayne-bay-archeological-sites"></div>
+    <div class="legend-btn active" id="biscayne-bay-cultural-institution"></div>
+  </nav>
   <div class="compass"></div>
   <div id="map"></div>
   <script>
@@ -294,7 +320,39 @@
 
   /// handler //////////////////////////////////////////////////////////////////
 
+
+    const toggle = (target)=>{
+      const id = target.id
+      //const visibility = map.getLayoutProperty(id,'visibility');
+      const visibility = target.classList.contains('active');
+          console.log("VISIBILITY====>",visibility,id)
+          if (visibility) {
+            map.setLayoutProperty(id, 'visibility', 'none');
+            target.classList.remove('active');
+          } else {
+            map.setLayoutProperty(id,'visibility','visible');
+            target.classList.add('active');
+          }
+    }
+
+    map.on('idle', (e)=>{
+      document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
+        console.log("parks")
+        toggle(e.target)
+      })
+      document.getElementById('biscayne-bay-archeological-sites').addEventListener('click', (e)=>{
+        console.log("sites")
+        toggle(e.target)
+      })
+      document.getElementById('biscayne-bay-cultural-institution').addEventListener('click', (e)=>{
+        console.log("inst")
+        toggle(e.target)
+      })
+
+    })
+
   map.on('click', (e) => {
+
     removeChildren(container);
     for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
       const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
@@ -320,7 +378,6 @@
   });
   map.on('mousemove', function (e) {
     const features = map.queryRenderedFeatures(e.point, {layers: layers});
-    console.log(features)
     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
   });
   map.on('rotate', (e)=>{
