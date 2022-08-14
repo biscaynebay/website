@@ -321,31 +321,31 @@
   /// handler //////////////////////////////////////////////////////////////////
 
 
-    const toggle = (target)=>{
-      const id = target.id
-      //const visibility = map.getLayoutProperty(id,'visibility');  ////requires map.loaded
-      const visibility = target.classList.contains('active');
-      if (visibility) {
-        map.setLayoutProperty(id, 'visibility', 'none');
-        target.classList.remove('active');
-      } else {
-        map.setLayoutProperty(id,'visibility','visible');
-        target.classList.add('active');
-      }
+  const toggle = (target)=>{
+    const id = target.id
+    //const visibility = map.getLayoutProperty(id,'visibility');  ////requires map.loaded
+    const visibility = target.classList.contains('active');
+    if (visibility) {
+      map.setLayoutProperty(id, 'visibility', 'none');
+      target.classList.remove('active');
+    } else {
+      map.setLayoutProperty(id,'visibility','visible');
+      target.classList.add('active');
     }
+  }
 
-    document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
-        console.log("parks")
-        toggle(e.target)
-      })
-      document.getElementById('biscayne-bay-archeological-sites').addEventListener('click', (e)=>{
-        console.log("sites")
-        toggle(e.target)
-      })
-      document.getElementById('biscayne-bay-cultural-institution').addEventListener('click', (e)=>{
-        console.log("inst")
-        toggle(e.target)
-      })
+  document.getElementById('biscayne-bay-parks').addEventListener('click', (e)=>{
+      console.log("parks")
+      toggle(e.target)
+    })
+    document.getElementById('biscayne-bay-archeological-sites').addEventListener('click', (e)=>{
+      console.log("sites")
+      toggle(e.target)
+    })
+    document.getElementById('biscayne-bay-cultural-institution').addEventListener('click', (e)=>{
+      console.log("inst")
+      toggle(e.target)
+    })
 
   map.on('click', (e) => {
 
