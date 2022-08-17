@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
 
@@ -108,6 +107,7 @@
     /*overflow-x: hidden;*/
     overflow-y: auto;
   }
+
   .lgview .div {
     padding: 10px;
   }
@@ -137,8 +137,6 @@
     padding: 10px;
     font-weight: 400;
   }
-
-
 
   .location-img {
     width: 380px;
@@ -268,8 +266,8 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
     layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks'];
     const bounds = [
-         [-81.51223172286319, 24.621290094170632], // Southwest coordinates
-         [-79.35826265105771, 27.64779362822521] // Northeast coordinates
+      [-81.51223172286319, 24.621290094170632], // Southwest coordinates
+      [-79.35826265105771, 27.64779362822521] // Northeast coordinates
      ];
 
   /// views ////////////////////////////////////////////////////////////////////
@@ -277,22 +275,20 @@
   const Detail = (title, image, body) => {
     elem = document.createElement('div');
     elem.className = 'lgview'
-    const markup = `
+    elem.innerHTML = `
     <div class="drawer-header">
       <button type="button" id="detail-close" class="button"></button>
     </div>
     <img class="location-img-lg" src="${image}">
     <h3 id="location-title">${title}</h3>
-    <p id="location-body">${body}</p>
-    `;
-    elem.innerHTML = markup;
+    <p id="location-body">${body}</p>`;
     return elem;
   };
 
   const Drawer = (title, image, body) => {
     elem = document.createElement('div');
     elem.className = 'drawer'
-    const markup = `
+    elem.innerHTML = `
     <div class="drawer-header">
       <button type="button" id="drawer-close" class="button"></button>
     </div>
@@ -301,9 +297,7 @@
     <p id="location-body">${body}</p>
     <div class="button-container">
       <button id="detail-open" class="view-more">View More</button>
-    </div>
-    `;
-    elem.innerHTML = markup;
+    </div>`;
     return elem;
   };
 
@@ -362,8 +356,9 @@
 
   });
 
-  const toggleLayer = (map, id) => map.setLayoutProperty(id, map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');
-
+  const toggleLayer = (map, id) => {
+    map.setLayoutProperty(id, map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');
+  }
   </script>
 </head>
 <body>
