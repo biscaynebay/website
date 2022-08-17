@@ -313,11 +313,13 @@
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
-      center: [-80.221, 25.618],
-      zoom: 9.42,
+      center: [-80.201, 25.728],
+      zoom: 10.22,
       maxBounds: bounds
     });
-
+    map.on('load', (e)=>{
+      layers.map(id=>{map.setLayoutProperty(id, 'visibility', 'visible')})
+    })
     map.on('click', (e) => {
       removeChildren(container);
       for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
@@ -356,9 +358,7 @@
 
   });
 
-  const toggleLayer = (map, id) => {
-    map.setLayoutProperty(id, map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');
-  }
+  const toggleLayer = (map, id) => {map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');}
   </script>
 </head>
 <body>
