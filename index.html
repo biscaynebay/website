@@ -241,7 +241,7 @@
     cursor: pointer;
 
     }
-    #legend p{
+    .legend-item{
       font-size: 22px;
       font-weight: bold;
       color: #433624;
@@ -399,9 +399,15 @@
 <body>
   <div id="map"></div>
   <div id="legend">
-    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
+    <!--<p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
     <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
-    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks </span> </p>
+    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks </span> </p>-->
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')">
+      <div class="legend-btn sites active" id="biscayne-bay-archeological-sites"></div>  Archeological Sites </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')">
+      <div class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></div>  Cultural Institutions </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
+      <div class="legend-btn parks active" id="biscayne-bay-parks"></div>  Parks </div>
   </div>
   <div id='compass' class="compass"></div>
 </body>
