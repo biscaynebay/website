@@ -15,6 +15,13 @@
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
   <style>
+  .unselectable{
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+  }
   .scollable {
     scrollbar-width: thin;
     scrollbar-color: #CFBBA0 #f8f6f1;
@@ -218,6 +225,7 @@
     display: flex;
     flex-direction: column;
     align-items:flex-start;
+    cursor: pointer;
 
     }
     #legend p{
@@ -322,6 +330,9 @@
       zoom: 10.22,
       maxBounds: bounds
     });
+    map.on('load', (e)=>{
+      layers.map(l=>{map.setLayoutProperty(l, 'visibility', 'visible')})
+    })
 
     map.on('click', (e) => {
       removeChildren(container);
@@ -362,17 +373,18 @@
   });
 
   const toggleLayer = (map, id) => {
-    map.getLayoutProperty(id, 'visibility') ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
-    map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') ? 'visible' : 'none');}
+    console.log(map.getLayoutProperty(id, 'visibility'))
+    map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
+    map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')}
 
   </script>
 </head>
 <body>
   <div id="map"></div>
   <div id="legend">
-    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
-    <p onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
-    <p onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks </span> </p>
+    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
+    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
+    <p class="unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks </span> </p>
   </div>
   <div id='compass' class="compass"></div>
 </body>
