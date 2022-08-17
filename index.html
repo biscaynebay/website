@@ -15,22 +15,30 @@
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
   <style>
-   /* Works on Firefox */
-  * {
+  .scollable {
     scrollbar-width: thin;
     scrollbar-color: #CFBBA0 #f8f6f1;
   }
 
-  /* Works on Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 15px;
+  .scrollable::-webkit-scrollbar {
+    width: 10px;
   }
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #CFBBA0;
+  .scrollable::-webkit-scrollbar-thumb {
+    background-color: #f8f6f1;
     border-radius: 5px;
-    border: 6px solid #f8f6f1;
+    border: 3.5px solid #f8f6f1;
   }
+
+  .scrollable:hover::-webkit-scrollbar-thumb {
+    background: #CFBBA0;
+  }
+
+  .scrollable.scrolling::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:vertical:hover {
+      background: #CFBBA0;
+  }
+
 
   #map {
     position: fixed;
@@ -61,7 +69,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .6);
     transition: all 200ms ease-in-out;
     /*overflow-x: hidden;*/
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
 
@@ -257,9 +265,6 @@
     }
   };
 
-  const toggleVisibility = (elem) => {
-    elem.style.visibility === 'visible' ? elem.style.visibility = 'hidden' : elem.style.visibility = 'visible';
-  };
 
   /// configs //////////////////////////////////////////////////////////////////
 
@@ -274,7 +279,7 @@
 
   const Detail = (title, image, body) => {
     elem = document.createElement('div');
-    elem.className = 'lgview'
+    elem.className = 'lgview scrollable'
     elem.innerHTML = `
     <div class="drawer-header">
       <button type="button" id="detail-close" class="button"></button>
@@ -287,7 +292,7 @@
 
   const Drawer = (title, image, body) => {
     elem = document.createElement('div');
-    elem.className = 'drawer'
+    elem.className = 'drawer scrollable'
     elem.innerHTML = `
     <div class="drawer-header">
       <button type="button" id="drawer-close" class="button"></button>
@@ -317,9 +322,7 @@
       zoom: 10.22,
       maxBounds: bounds
     });
-    map.on('load', (e)=>{
-      layers.map(id=>{map.setLayoutProperty(id, 'visibility', 'visible')})
-    })
+
     map.on('click', (e) => {
       removeChildren(container);
       for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
@@ -352,21 +355,24 @@
 
     map.on('rotate', (e)=>{
       const direction = -map.getBearing()
-      const compass   = document.getElementsByClassName('compass')[0];
+      const compass   = document.getElementById('compass');
       compass.style.transform = 'rotate(' + direction + 'deg)';
     });
 
   });
 
-  const toggleLayer = (map, id) => {map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'none' ? 'visible' : 'none');}
+  const toggleLayer = (map, id) => {
+    map.getLayoutProperty(id, 'visibility') ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
+    map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') ? 'visible' : 'none');}
+
   </script>
 </head>
 <body>
   <div id="map"></div>
   <div id="legend">
-    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" ></span>  Archeological Sites   </p>
-    <p onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active"></span>  Cultural Institutions</p>
-    <p onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active"></span>  Parks                 </span> </p>
+    <p onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')"> <span class="legend-btn sites active" id="biscayne-bay-archeological-sites"></span>  Archeological Sites   </p>
+    <p onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')"> <span class="legend-btn institutes active" id="biscayne-bay-cultural-institution"></span>  Cultural Institutions</p>
+    <p onclick="toggleLayer(map, 'biscayne-bay-parks')"> <span class="legend-btn parks active" id="biscayne-bay-parks"></span>  Parks </span> </p>
   </div>
   <div id='compass' class="compass"></div>
 </body>
