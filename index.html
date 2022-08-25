@@ -245,7 +245,7 @@
 
     /// views ////////////////////////////////////////////////////////////////////
 
-    const Drawer = (banner, title, body) => {
+    const Drawer = (banner, title, description) => {
       elem = document.createElement('div');
       elem.className = 'drawer scrollable'
       elem.innerHTML =
@@ -259,7 +259,7 @@
       return elem;
     };
 
-    const Detail = (banner, title, body) => {
+    const Detail = (banner, title, description) => {
       elem = document.createElement('div');
       elem.className = 'detail scrollable'
       elem.innerHTML =
@@ -268,7 +268,7 @@
 	        <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
 	      </svg>
         <div class="title">${title}</div>
-        <div class="body">${body}</div>`;
+        <div class="body">${description}</div>`;
       return elem;
     };
 
