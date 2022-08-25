@@ -78,7 +78,7 @@
     .button-close {
       position    : absolute;
       display     : block;
-      inset       : 10px 10px auto auto;
+      inset       : 20px 10px auto auto;
       width       : 21px;
       height      : 21px;
       color       : #000000;
@@ -225,10 +225,9 @@
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
     const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks'];
-    const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar ex lacinia arcullamcorper, sed tempus arcu lacinia. Integer volutpat eros odio, eu vehicula eros pellentesque id. Nunc faucibus porta lobortis. Praesent nec diam ac lacus convallis cursus. Maecenas at congue nibh"
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
-      [-79.17887785, 26.54779362822521] // Northeast coordinates
+      [-79.17887785,       26.54779362822521]   // Northeast coordinates
      ];
 
     /// views ////////////////////////////////////////////////////////////////////
@@ -285,14 +284,12 @@
 
       map.on('click', (e) => {
         removeChildren(container);
-        for (const feature of map.queryRenderedFeatures(e.point, {
-            layers: layers
-          })) {
-          const image = 'https://i.ibb.co/h9B6rph/cape-florida-sample.jpg';
-          const drawer = Drawer(image, feature.properties.name, lorem);
+        for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
+          console.log('feature', feature)
+          const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description);
           drawer.addEventListener('click', (e) => {
             if (e.target.id === 'detail-open' || e.target.id === 'drawer-banner') {
-              const detail = Detail(image, feature.properties.name, lorem);
+              const detail = Detail(feature.properties.heroimg, feature.properties.name, feature.properties.description);
               detail.addEventListener('click', (e) => {
                 if (e.target.id === 'detail-close-button') {
                   container.removeChild(e.currentTarget)
