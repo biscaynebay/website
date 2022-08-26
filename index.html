@@ -58,6 +58,17 @@
       color       : #78553a;
       text-align  : left;
     }
+    
+    .detail-body {
+      position    : static;
+      display     : block;
+      margin      : 0 100px 32px 100px;
+      font-family : 'Barlow';
+      font-size   : 16px;
+      line-height : 22px;
+      color       : #78553a;
+      text-align  : center;
+    }
 
     .button {
       position         : static;
@@ -186,7 +197,7 @@
     }
 
     .sites.active {
-      background-color : #433624;
+      background-color : #6d4c21;
     }
 
     .institutes.active {
@@ -268,7 +279,7 @@
 	        <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
 	      </svg>
         <div class="title">${title}</div>
-        <div class="body">${description}</div>`;
+        <div class="detail-body">${description}</div>`;
       return elem;
     };
 
