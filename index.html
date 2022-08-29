@@ -324,8 +324,9 @@
         layers.map(id => {
           map.setLayoutProperty(id, 'visibility', 'visible')
         })
-      })
-
+        
+      });
+      
       map.on('click', (e) => {
         removeChildren(container);
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
@@ -388,7 +389,7 @@
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
       <div class="legend-badge parks active" id="biscayne-bay-parks"></div>  Parks </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
-      <div class="legend-badge satellite inactive" id="mapbox-satellite"></div> Satellite View </div>
+      <div class="legend-badge satellite active" id="mapbox-satellite"></div> Satellite View </div>
   </div>
   <img id='compass' class="compass" src="https://i.ibb.co/cgYr5C9/compas.png"></div>
 </body>
