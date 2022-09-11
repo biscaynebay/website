@@ -59,6 +59,18 @@
       text-align  : left;
     }
     
+    .image-disclaimer {
+      position    : static;
+      display     : block;
+      margin      : 0 12px 32px 12px;
+      font-family : 'Barlow';
+      font-style  : italic;
+      font-size   : 16px;
+      line-height : 22px;
+      color       : #D3D3D3;
+      text-align  : left;
+    }
+    
     .detail-body {
       position    : static;
       display     : block;
@@ -68,6 +80,7 @@
       line-height : 22px;
       color       : #78553a;
       text-align  : center;
+      
     }
 
     .button {
@@ -271,6 +284,7 @@
 	      <svg id="drawer-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
           <path id="drawer-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
         </svg>
+        <div class="image-disclaimer">*click image to expand</div>
         <div class="title">${title}</div>
         <div class="body">${description}</div>
         <div class="button">View More</div>`;
