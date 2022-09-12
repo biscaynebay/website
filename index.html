@@ -220,6 +220,10 @@
       background-color : #ed8f7a;
     }
     
+    .water.active {
+      background-color : #51af9f;
+    }
+    
     .satellite.active {
       background-color : #000000;
     }
@@ -268,7 +272,7 @@
     /// configs //////////////////////////////////////////////////////////////////
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks'];
+    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'biscayne-bay-water'];
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
       [-79.17887785,       26.54779362822521]   // Northeast coordinates
@@ -400,6 +404,8 @@
       <div class="legend-badge institutes active" id="biscayne-bay-cultural-institution"></div>  Cultural Institutions </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
       <div class="legend-badge parks active" id="biscayne-bay-parks"></div>  Parks </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-water')">
+      <div class="legend-badge water active" id="biscayne-bay-water"></div>  Waterways </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
       <div class="legend-badge satellite active" id="mapbox-satellite"></div> Satellite View </div>
   </div>
