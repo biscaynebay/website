@@ -224,6 +224,22 @@
       background-color : #51af9f;
     }
     
+    .nature.active {
+      background-color : #35773D;
+    }
+    
+    .monuments.active {
+      background-color : #AA4430;
+    }
+    
+    .lighthouses-wrecks.active {
+      background-color : #EDCB4E;
+    }
+    
+    .historic-district.active {
+      background-color : #9B6D35;
+    }
+    
     .satellite.active {
       background-color : #000000;
     }
@@ -405,9 +421,15 @@
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
       <div class="legend-badge parks active" id="biscayne-bay-parks"></div>  Parks </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-waterways-and-bodies-of')">
-      <div class="legend-badge water active" id="biscayne-waterways-and-bodies-of"></div> Waterways and Bodies of Water</div>
+      <div class="legend-badge water active" id="biscayne-waterways-and-bodies-of"></div> Waterways & Bodies of Water</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-monuments')">
+      <div class="legend-badge monuments active" id="biscayne-monuments"></div> Monuments</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
+      <div class="legend-badge lighthouses-wrecks active" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
+      <div class="legend-badge historic-district active" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-nature')">
-      <div class="legend-badge water active" id="biscayne-nature"></div> Nature</div>
+      <div class="legend-badge nature active" id="biscayne-nature"></div> Nature</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
       <div class="legend-badge satellite active" id="mapbox-satellite"></div> Satellite View </div>
   </div>
