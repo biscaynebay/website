@@ -288,7 +288,7 @@
     /// configs //////////////////////////////////////////////////////////////////
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'biscayne-waterways-and-bodies-of', 'biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts'];
+    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'biscayne-waterways-and-bodies-of', 'biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts', 'biscayne-national-park'];
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
       [-79.17887785,       26.54779362822521]   // Northeast coordinates
@@ -426,8 +426,8 @@
       <div class="legend-badge monuments active" id="biscayne-monuments"></div> Monuments</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
       <div class="legend-badge lighthouses-wrecks active" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
-      <div class="legend-badge historic-district active" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-historic-districts')">
+      <div class="legend-badge historic-district active" id="biscayne-historic-districts"></div> Historic Districts</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-nature')">
       <div class="legend-badge nature active" id="biscayne-nature"></div> Nature</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
