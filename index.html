@@ -244,6 +244,10 @@
     .satellite.active {
       background-color : #000000;
     }
+    
+    .native-lands.active {
+      background-color : #946524;
+    }
 
     .active {
       background-color : green;
@@ -289,7 +293,7 @@
     /// configs //////////////////////////////////////////////////////////////////
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'biscayne-waterways-and-bodies-of', 'biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts'];
+    const layers = ['biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'biscayne-waterways-and-bodies-of', 'biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts', 'native-lands'];
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
       [-79.17887785,       26.54779362822521]   // Northeast coordinates
@@ -433,6 +437,8 @@
       <div class="legend-badge nature active" id="biscayne-nature"></div> Nature</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
       <div class="legend-badge satellite active" id="mapbox-satellite"></div> Satellite View </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'native-lands')">
+      <div class="legend-badge native-lands active" id="native-lands"></div> Current Reservations</div>
   </div>
   <img id='compass' class="compass" src="https://i.ibb.co/cgYr5C9/compas.png"></div>
 </body>
