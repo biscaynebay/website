@@ -285,7 +285,7 @@
       background-color : #946524;
     }
 
-    .biscayne-transportation-and-ener.active {
+    .transportation-energy.active {
       background-color : #777777;
     }
     .satellite{
@@ -341,7 +341,10 @@
     /// configs //////////////////////////////////////////////////////////////////
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
-    const layers = ['biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts', 'biscayne-waterways-and-bodies-of', 'biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'native-lands'];
+
+    const poitypes = ['transportation-energy', 'nature', 'monuments', 'lighthouses-wrecks', 'historic-districts', 'waterways', 'archeological', 'culture', 'parks', 'native-lands', 'places-of-interest'];
+    const layers = ['biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts', 'biscayne-waterways-and-bodies-of', 'biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'native-lands', 'places-of-interest'];
+
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
       [-79.17887785,       26.54779362822521]   // Northeast coordinates
@@ -389,6 +392,7 @@
     /// init ////////////////////////////////////////////////////////////////////
 
     var map;
+    var visiblelayers = new Set('empty') //empty value to prevent Mapbox filter from crashing when all POI are disabled.
 
     document.addEventListener('DOMContentLoaded', (_) => {
 
@@ -420,11 +424,26 @@
         layers.map(id => {
           map.setLayoutProperty(id, 'visibility', 'none')
         })
-      });
+        map.setLayoutProperty('places-of-interest', 'visibility', 'visible');
+        map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
+        map.setLayoutProperty("places-of-interest", 'icon-image',
+        ['match', ["get", "poitype"],
+          'archeological','archeological_site',
+          'culture','culture',
+          'lighthouse-wrecks','lighthouse-wrecks',
+          'monuments','monuments',
+          'nature','nature',
+          'parks','parks',
+          'transportation-energy','transport_energy',
+          'waterways','water_park',
+          'parks']);
+        })
 
       map.on('click', (e) => {
         removeChildren(container);
+
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
+          console.log(feature)
           const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description);
           drawer.addEventListener('click', (e) => {
             if (e.target.id === 'detail-open' || e.target.id === 'drawer-banner') {
@@ -468,8 +487,18 @@
     });
 
     const toggleLayer = (map, id) => {
-      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
-      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
+
+      if (visiblelayers.has(id)){
+        visiblelayers.delete(id);
+        document.getElementById(id).classList.remove('active');
+      }else{
+        visiblelayers.add(id);
+        document.getElementById(id).classList.add('active');
+      }
+      
+      map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
+      //map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
+      //map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
     }
 
   </script>
@@ -480,24 +509,24 @@
     <div id="legend">Legend</div>
     <div id="legend-content">
       <br>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')">
-      <div class="legend-badge sites" id="biscayne-bay-archeological-sites"></div> Archeological Sites </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')">
-      <div class="legend-badge institutes" id="biscayne-bay-cultural-institution"></div> Cultural Institutions </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
-      <div class="legend-badge parks" id="biscayne-bay-parks"></div>  Parks </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-waterways-and-bodies-of')">
-      <div class="legend-badge water" id="biscayne-waterways-and-bodies-of"></div> Waterways & Bodies of Water</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-monuments')">
-      <div class="legend-badge monuments " id="biscayne-monuments"></div> Monuments</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
-      <div class="legend-badge lighthouses-wrecks" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-historic-districts')">
-      <div class="legend-badge historic-district" id="biscayne-historic-districts"></div> Historic Districts</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-nature')">
-      <div class="legend-badge nature" id="biscayne-nature"></div> Nature</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-transportation-and-ener')">
-      <div class="legend-badge biscayne-transportation-and-ener" id="biscayne-transportation-and-ener"></div> Transportation and Energy</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'archeological')">
+      <div class="legend-badge sites" id="archeological"></div> Archeological Sites </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'culture')">
+      <div class="legend-badge institutes" id="culture"></div> Cultural Institutions </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'parks')">
+      <div class="legend-badge parks" id="parks"></div>  Parks </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'waterways')">
+      <div class="legend-badge water" id="waterways"></div> Waterways & Bodies of Water</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'monuments')">
+      <div class="legend-badge monuments " id="monuments"></div> Monuments</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'lighthouses-wrecks')">
+      <div class="legend-badge lighthouses-wrecks" id="lighthouses-wrecks"></div> Lighthouses & Wrecks</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'historic-districts')">
+      <div class="legend-badge historic-district" id="historic-districts"></div> Historic Districts</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'nature')">
+      <div class="legend-badge nature" id="nature"></div> Nature</div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'transportation-energy')">
+      <div class="legend-badge transportation-energy" id="transportation-energy"></div> Transportation and Energy</div>
     <hr>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'native-lands')">
       <div class="legend-badge native-lands" id="native-lands"></div> Native Lands</div>
