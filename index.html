@@ -126,7 +126,7 @@
       animation: slide 0.5s forwards;
       display          : block;
       inset            : 0 auto 0 0;
-      width            : 420px;
+      width            : 375px;
       padding          : 0 0 50px 10px;
       overflow-y       : scroll;
       background-color : #f8f6f1;
@@ -357,10 +357,10 @@
       elem = document.createElement('div');
       elem.className = 'slide drawer scrollable'
       elem.innerHTML =
-       `<img id="drawer-banner" class="banner banner-drawer actionable" src="${heroimg}">
-	      <svg id="drawer-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+       `<svg id="drawer-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
           <path id="drawer-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
         </svg>
+        <img id="drawer-banner" class="banner banner-drawer actionable" src="${heroimg}">
         <div class="image-disclaimer">*click image to expand</div>
         <div class="title">${title}</div>
         <div class="body">${description}</div>
@@ -372,10 +372,10 @@
       elem = document.createElement('div');
       elem.className = 'detail scrollable'
       elem.innerHTML =
-       `<img class="banner banner-detail" src="${heroimg}">
-	      <svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+       `<svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
 	        <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
 	      </svg>
+        <img class="banner banner-detail" src="${heroimg}">
         <div class="title">${title}</div>
         <div class="detail-body">${description}</div>`;
       return elem;
@@ -496,8 +496,9 @@
         visiblelayers.add(id);
         document.getElementById(id).classList.add('active');
       }
-
+      
       map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
+
       //map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
       //map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
     }
