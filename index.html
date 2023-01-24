@@ -96,6 +96,7 @@
       color            : white;
       background-color : #78553a;
       cursor           : pointer;
+      text-decoration  : none;
     }
     .button:hover {
       background-color : #9d7d3f;
@@ -352,7 +353,7 @@
 
     /// views ////////////////////////////////////////////////////////////////////
 
-    const Drawer = (heroimg, title, description) => {
+    const Drawer = (heroimg, title, description, link) => {
       elem = document.createElement('div');
       elem.className = 'slide drawer scrollable'
       elem.innerHTML =
@@ -363,11 +364,11 @@
         <div class="image-disclaimer">*click image to expand</div>
         <div class="title">${title}</div>
         <div class="body">${description}</div>
-        <div class="button">View More</div>`;
+        <a class="button" href="${link}">View More</a>`;
       return elem;
     };
 
-    const Detail = (heroimg, title, description) => {
+    const Detail = (heroimg, title, description, link) => {
       elem = document.createElement('div');
       elem.className = 'detail scrollable'
       elem.innerHTML =
@@ -444,10 +445,10 @@
 
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
           console.log(feature)
-          const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description);
+          const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description, feature.properties.link1);
           drawer.addEventListener('click', (e) => {
             if (e.target.id === 'detail-open' || e.target.id === 'drawer-banner') {
-              const detail = Detail(feature.properties.heroimg, feature.properties.name, feature.properties.description);
+              const detail = Detail(feature.properties.heroimg, feature.properties.name, feature.properties.description, feature.properties.link1);
               detail.addEventListener('click', (e) => {
                 if (e.target.id === 'detail-close-button') {
                   container.removeChild(e.currentTarget)
@@ -495,7 +496,7 @@
         visiblelayers.add(id);
         document.getElementById(id).classList.add('active');
       }
-      
+
       map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
       //map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
       //map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
