@@ -6,6 +6,7 @@
   <title>Biscayne Bay</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" />
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
 
@@ -58,7 +59,7 @@
       color       : #78553a;
       text-align  : left;
     }
-    
+
     .image-disclaimer {
       position    : static;
       display     : block;
@@ -70,7 +71,7 @@
       color       : #D3D3D3;
       text-align  : left;
     }
-    
+
     .detail-body {
       position    : static;
       display     : block;
@@ -80,7 +81,7 @@
       line-height : 22px;
       color       : #78553a;
       text-align  : center;
-      
+
     }
 
     .button {
@@ -171,22 +172,58 @@
       font-family      : 'Italianno';
       font-size        : 28px;
       color            : #78553a;
+      pointer-events   : none;
     }
-
-    #legend {
+    #legend-container{
       position       : fixed;
       display        : flex;
       flex-direction : column;
       align-items    : flex-start;
       inset          : 10px 10px auto auto;
-      height         : 200px;
+    }
+    #legend {
+      background-color: #D9C0A3;
+      color: #433725;
+      cursor: pointer;
+      padding: 18px;
+      width:100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      text-align: center;
+      font-family    : "Merriweather";
+      border-radius: 5px;
+    }
+
+    #legend:after {
+      content: '\f106';
+      font-family: "fontawesome";
+      font-size: 20px;
+      float: right;
+    }
+    #legend.active:after {
+      content: '\f107';
+    }
+
+    .legend.active, #legend:hover {
+      background-color: #C2AC8B;
+    }
+
+    #legend-content {
+      padding: 0 18px;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.2s ease-out;
+      background-color: #F8F6F1;
+      border-radius: 0 0 5px 5px;
     }
 
     .legend-item {
-      font-family    : "merriweather";
+      font-family    : "Merriweather";
       font-size      : 14px;
       letter-spacing : 0.5px;
-      color          : #ffffff;
+      color          : #78553a;
       cursor         : pointer;
     }
 
@@ -198,14 +235,14 @@
       margin           : 0 5px 5px 0;
       border-radius    : 25px;
       background-color : lightgray;
-      border-color     : white;
+      border-color     : #8A7E76;
       border-width     : 1.5px;
       border-style     : solid;
       cursor           : pointer;
     }
 
     .legend-item:hover .legend-badge {
-      border-width     : 2.5px;
+      border-width     : 2px;
     }
 
     .parks.active {
@@ -219,37 +256,45 @@
     .institutes.active {
       background-color : #ed8f7a;
     }
-    
+
     .water.active {
       background-color : #51af9f;
     }
-    
+
     .nature.active {
       background-color : #35773D;
     }
-    
+
     .monuments.active {
       background-color : #AA4430;
     }
-    
+
     .lighthouses-wrecks.active {
       background-color : #EDCB4E;
     }
-    
+
     .historic-district.active {
       background-color : #9B6D35;
     }
-    
+
     .satellite.active {
       background-color : #000000;
     }
-    
+
     .native-lands.active {
       background-color : #946524;
     }
-    
+
     .biscayne-transportation-and-ener.active {
       background-color : #777777;
+    }
+    .satellite{
+      margin-top: 10px;
+      margin-left: 18px;
+    }
+
+    .white-border {
+      border-color     : #ffffff;
     }
 
     .active {
@@ -353,6 +398,16 @@
       overlay = document.createElement('div');
       document.body.appendChild(overlay);
 
+      document.getElementById('legend').addEventListener('click', function() {
+        this.classList.toggle('active');
+        var content = document.getElementById('legend-content')
+        if (content.style.height){
+          content.style.height = null;
+        } else {
+          content.style.height = content.scrollHeight + 18 + "px";
+        }
+      })
+
       map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
@@ -363,10 +418,10 @@
 
       map.on('load', (e) => {
         layers.map(id => {
-          map.setLayoutProperty(id, 'visibility', 'visible')
+          map.setLayoutProperty(id, 'visibility', 'none')
         })
       });
-      
+
       map.on('click', (e) => {
         removeChildren(container);
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
@@ -402,7 +457,7 @@
         } else {
           map.getCanvas().style.cursor = '';
           removeChildren(overlay);
-        }; 
+        };
       });
 
       map.on('rotate', (e) => {
@@ -421,30 +476,35 @@
 </head>
 <body>
   <div id="map" class="map"></div>
-  <div id="legend">
+  <div id="legend-container">
+    <div id="legend">Legend</div>
+    <div id="legend-content">
+      <br>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-archeological-sites')">
-      <div class="legend-badge sites active" id="biscayne-bay-archeological-sites"></div> Archeological Sites </div>
+      <div class="legend-badge sites" id="biscayne-bay-archeological-sites"></div> Archeological Sites </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-cultural-institution')">
-      <div class="legend-badge institutes active" id="biscayne-bay-cultural-institution"></div> Cultural Institutions </div>
+      <div class="legend-badge institutes" id="biscayne-bay-cultural-institution"></div> Cultural Institutions </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-bay-parks')">
-      <div class="legend-badge parks active" id="biscayne-bay-parks"></div>  Parks </div>
+      <div class="legend-badge parks" id="biscayne-bay-parks"></div>  Parks </div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-waterways-and-bodies-of')">
-      <div class="legend-badge water active" id="biscayne-waterways-and-bodies-of"></div> Waterways & Bodies of Water</div>
+      <div class="legend-badge water" id="biscayne-waterways-and-bodies-of"></div> Waterways & Bodies of Water</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-monuments')">
-      <div class="legend-badge monuments active" id="biscayne-monuments"></div> Monuments</div>
+      <div class="legend-badge monuments " id="biscayne-monuments"></div> Monuments</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-lighthouses-and-wrecks')">
-      <div class="legend-badge lighthouses-wrecks active" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
+      <div class="legend-badge lighthouses-wrecks" id="biscayne-lighthouses-and-wrecks"></div> Lighthouses & Wrecks</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-historic-districts')">
-      <div class="legend-badge historic-district active" id="biscayne-historic-districts"></div> Historic Districts</div>
+      <div class="legend-badge historic-district" id="biscayne-historic-districts"></div> Historic Districts</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-nature')">
-      <div class="legend-badge nature active" id="biscayne-nature"></div> Nature</div>
+      <div class="legend-badge nature" id="biscayne-nature"></div> Nature</div>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'biscayne-transportation-and-ener')">
-      <div class="legend-badge biscayne-transportation-and-ener active" id="biscayne-transportation-and-ener"></div> Transportation and Energy</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
-      <div class="legend-badge satellite active" id="mapbox-satellite"></div> Satellite View </div>
+      <div class="legend-badge biscayne-transportation-and-ener" id="biscayne-transportation-and-ener"></div> Transportation and Energy</div>
+    <hr>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'native-lands')">
-      <div class="legend-badge native-lands active" id="native-lands"></div> Native Lands</div>
+      <div class="legend-badge native-lands" id="native-lands"></div> Native Lands</div>
+    </div>
+    <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
+      <div class="legend-badge white-border satellite" id="mapbox-satellite"></div> Satellite View </div>
   </div>
-  <img id='compass' class="compass" src="https://images.squarespace-cdn.com/content/63b61746f59f2a406c52f733/62cfd444-9fe3-4a1e-8e78-dc0ba50dd96b/compass_3.png"></div>
+  <img id='compass' class="compass" src="https://images.squarespace-cdn.com/content/v1/63b61746f59f2a406c52f733/a1c61f21-ab3d-4eb8-af5a-2bdb8ef52cd0/compass_3.png">
 </body>
 </html>
