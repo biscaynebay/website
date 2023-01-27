@@ -119,7 +119,6 @@
       width    : 400px;
       height   : 170px;
       bottom   : 50px;
-      
     }
 
     .drawer {
@@ -309,7 +308,6 @@
       -moz-user-select      : none;
       -ms-user-select       : none;
       user-select           : none;
-      user-drag: none;
     }
 
     .scollable {
@@ -374,10 +372,10 @@
       elem = document.createElement('div');
       elem.className = 'detail scrollable'
       elem.innerHTML =
-       `<svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+       `<img class="banner banner-detail" src="${heroimg}">
+	      <svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
 	        <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
 	      </svg>
-        <img class="banner banner-detail" src="${heroimg}">
         <div class="title">${title}</div>
         <div class="detail-body">${description}</div>`;
       return elem;
@@ -489,8 +487,7 @@
       });
     });
 
-    const toggleLayer = (map, id) => {
-
+    const toggleFilter = (map, id) => {
       if (visiblelayers.has(id)){
         visiblelayers.delete(id);
         document.getElementById(id).classList.remove('active');
@@ -498,11 +495,11 @@
         visiblelayers.add(id);
         document.getElementById(id).classList.add('active');
       }
-      
       map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
-
-      //map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
-      //map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
+    }
+    const toggleLayer = (map, id) => {
+      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
+      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
     }
 
   </script>
@@ -513,23 +510,23 @@
     <div id="legend">Legend</div>
     <div id="legend-content">
       <br>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'archeological')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'archeological')">
       <div class="legend-badge sites" id="archeological"></div> Archeological Sites </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'culture')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'culture')">
       <div class="legend-badge institutes" id="culture"></div> Cultural Institutions </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'parks')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'parks')">
       <div class="legend-badge parks" id="parks"></div>  Parks </div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'waterways')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'waterways')">
       <div class="legend-badge water" id="waterways"></div> Waterways & Bodies of Water</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'monuments')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'monuments')">
       <div class="legend-badge monuments " id="monuments"></div> Monuments</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'lighthouses-wrecks')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'lighthouses-wrecks')">
       <div class="legend-badge lighthouses-wrecks" id="lighthouses-wrecks"></div> Lighthouses & Wrecks</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'historic-districts')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'historic-districts')">
       <div class="legend-badge historic-district" id="historic-districts"></div> Historic Districts</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'nature')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'nature')">
       <div class="legend-badge nature" id="nature"></div> Nature</div>
-    <div class="legend-item unselectable" onclick="toggleLayer(map, 'transportation-energy')">
+    <div class="legend-item unselectable" onclick="toggleFilter(map, 'transportation-energy')">
       <div class="legend-badge transportation-energy" id="transportation-energy"></div> Transportation and Energy</div>
     <hr>
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'native-lands')">
@@ -538,6 +535,6 @@
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
       <div class="legend-badge white-border satellite" id="mapbox-satellite"></div> Satellite View </div>
   </div>
-  <img id='compass' class="compass unselectable" src="https://i.ibb.co/9GTSZjT/compass-3.png">
+  <img id='compass' class="compass" src="https://images.squarespace-cdn.com/content/v1/63b61746f59f2a406c52f733/a1c61f21-ab3d-4eb8-af5a-2bdb8ef52cd0/compass_3.png">
 </body>
 </html>
