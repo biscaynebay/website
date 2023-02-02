@@ -116,9 +116,15 @@
     .compass {
       position : fixed;
       inset    : auto 32px 32px auto;
-      width    : 400px;
-      height   : 170px;
-      bottom   : 50px;
+      width    : 160px;
+      height   : 160px;
+      bottom   : 35px;
+    }
+    .compass-terrain {
+      position : fixed;
+      inset    : auto 0px 0px auto;
+      width    : 446px;
+      height   : 91px;
     }
 
     .drawer {
@@ -344,8 +350,7 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN3a2VuZGFsbCIsImEiOiJjbDVsNXNlZTcwZ2xsM2JxaXB0Y201bnhwIn0.Ps5Pn0XKcxRfxVdggxiqrQ';
 
     const poitypes = ['transportation-energy', 'nature', 'monuments', 'lighthouses-wrecks', 'historic-districts', 'waterways', 'archeological', 'culture', 'parks', 'native-lands', 'places-of-interest'];
-    const layers = ['biscayne-transportation-and-ener', 'biscayne-nature', 'biscayne-monuments', 'biscayne-lighthouses-and-wrecks', 'biscayne-historic-districts', 'biscayne-waterways-and-bodies-of', 'biscayne-bay-archeological-sites', 'biscayne-bay-cultural-institution', 'biscayne-bay-parks', 'native-lands', 'places-of-interest'];
-
+    const layers = ['places-of-interest'];
     const bounds = [
       [-81.51223172286319, 24.621290094170632], // Southwest coordinates
       [-79.17887785,       26.54779362822521]   // Northeast coordinates
@@ -390,11 +395,28 @@
       return elem;
     };
 
+    const toggleFilter = (map, id) => {
+      if (visiblelayers.has(id)){
+        visiblelayers.delete(id);
+        document.getElementById(id).classList.remove('active');
+      }else{
+        visiblelayers.add(id);
+        document.getElementById(id).classList.add('active');
+      }
+      map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
+    }
+    
+    const toggleLayer = (map, id) => {
+      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
+      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
+    }
+
+
     /// init ////////////////////////////////////////////////////////////////////
 
     var map;
     var visiblelayers = new Set('empty') //empty value to prevent Mapbox filter from crashing when all POI are disabled.
-
+    
     document.addEventListener('DOMContentLoaded', (_) => {
 
       container = document.createElement('div');
@@ -487,20 +509,7 @@
       });
     });
 
-    const toggleFilter = (map, id) => {
-      if (visiblelayers.has(id)){
-        visiblelayers.delete(id);
-        document.getElementById(id).classList.remove('active');
-      }else{
-        visiblelayers.add(id);
-        document.getElementById(id).classList.add('active');
-      }
-      map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
-    }
-    const toggleLayer = (map, id) => {
-      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
-      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
-    }
+    
 
   </script>
 </head>
@@ -535,6 +544,7 @@
     <div class="legend-item unselectable" onclick="toggleLayer(map, 'mapbox-satellite')">
       <div class="legend-badge white-border satellite" id="mapbox-satellite"></div> Satellite View </div>
   </div>
-  <img id='compass' class="compass" src="https://i.ibb.co/9GTSZjT/compass-3.png">
+  <img id='compass-terrain' class="compass-terrain" src="https://i.postimg.cc/HsGfFH9r/terrain.png">
+  <img id='compass' class="compass" src="https://i.postimg.cc/yNT5ZSM9/compass.png">
 </body>
 </html>
