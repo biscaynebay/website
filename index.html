@@ -369,7 +369,7 @@
         <div class="image-disclaimer">*click image to expand</div>
         <div class="title">${title}</div>
         <div class="body">${description}</div>
-        <a class="button" href="${link}">View More</a>`;
+        <a class="button" href="${link}" target="_blank">View More</a>`;
       return elem;
     };
 
@@ -453,12 +453,13 @@
         ['match', ["get", "poitype"],
           'archeological','archeological_site',
           'culture','culture',
-          'lighthouse-wrecks','lighthouse-wrecks',
+          'lighthouse-wrecks','lighthouses-wrecks',
           'monuments','monuments',
           'nature','nature',
           'parks','parks',
           'transportation-energy','transport_energy',
           'waterways','water_park',
+          'historic-districts', 'historic-sites',
           'parks']);
         })
 
