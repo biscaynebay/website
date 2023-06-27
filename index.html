@@ -405,18 +405,20 @@
     const toggleLayer = (map, id) => {
       map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
       map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
-    }
+    };
 
-    const toggleFilter = (map, id) => {
-      if (visiblelayers.has(id)){
-        visiblelayers.delete(id);
-        document.getElementById(id).classList.remove('active');
-      }else{
-        visiblelayers.add(id);
+    const toggleFeature = (map, id) => {
+      features = map.queryRenderedFeatures({layers: layers}).reduce((s, f) => f.properties.poitype ? s.add(f.properties.poitype) : s, new Set())
+      if (features.has(id)) {
+        features.delete(id)
+        map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(features), true, false]);
+        document.getElementById(id).classList.remove('active')
+      } else {
+        features.add(id)
+        map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(features), true, false]);
         document.getElementById(id).classList.add('active');
       }
-      map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
-    }
+    };
 
     /// init ////////////////////////////////////////////////////////////////////
 
@@ -438,7 +440,7 @@
         } else {
           content.style.height = content.scrollHeight + 18 + "px";
         }
-      })
+      });
 
       map = new mapboxgl.Map({
         container : 'map',
@@ -449,13 +451,7 @@
       });
 
       map.on('load', (e) => {
-        layers.map(id => {
-          map.setLayoutProperty(id, 'visibility', 'visible')
-        })
-        map.setLayoutProperty('places-of-interest', 'visibility', 'visible');
-        map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
-        map.setLayoutProperty("places-of-interest", 'icon-image',
-        ['match', ["get", "poitype"],
+        map.setLayoutProperty("places-of-interest", 'icon-image', ['match', ["get", "poitype"],
           'archeological'         ,'archeological_site',
           'culture'               ,'culture',
           'lighthouses-wrecks'    ,'lighthouses_wrecks',
@@ -466,12 +462,11 @@
           'waterways'             ,'water_park',
           'historic-districts'    , 'historic_sites',
           'parks']);
-        })
+        });
 
       map.on('click', (e) => {
         removeChildren(container);
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
-          console.log(feature)
           const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description, feature.properties.link1);
           drawer.addEventListener('click', (e) => {
             if (e.target.id === 'detail-open' || e.target.id === 'drawer-banner') {
@@ -522,24 +517,24 @@
     <div id="legend">Legend</div>
     <div id="legend-content">
       <br>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'archeological')">
-      <div class="legend-badge sites" id="archeological"></div> Archeological Sites </div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'culture')">
-      <div class="legend-badge institutes" id="culture"></div> Cultural Institutions </div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'parks')">
-      <div class="legend-badge parks" id="parks"></div>  Parks </div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'waterways')">
-      <div class="legend-badge water" id="waterways"></div> Waterways & Bodies of Water</div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'monuments')">
-      <div class="legend-badge monuments " id="monuments"></div> Monuments</div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'lighthouses-wrecks')">
-      <div class="legend-badge lighthouses-wrecks" id="lighthouses-wrecks"></div> Lighthouses & Wrecks</div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'historic-districts')">
-      <div class="legend-badge historic-district" id="historic-districts"></div> Historic Districts</div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'nature')">
-      <div class="legend-badge nature" id="nature"></div> Nature</div>
-    <div class="legend-item unselectable" onclick="toggleFilter(map, 'transportation-energy')">
-      <div class="legend-badge transportation-energy" id="transportation-energy"></div> Transportation and Energy</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'archeological')">
+      <div class="legend-badge active sites" id="archeological"></div> Archeological Sites </div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'culture')">
+      <div class="legend-badge active institutes" id="culture"></div> Cultural Institutions </div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'parks')">
+      <div class="legend-badge active parks" id="parks"></div>  Parks </div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'waterways')">
+      <div class="legend-badge active water" id="waterways"></div> Waterways & Bodies of Water</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'monuments')">
+      <div class="legend-badge active monuments " id="monuments"></div> Monuments</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'lighthouses-wrecks')">
+      <div class="legend-badge active lighthouses-wrecks" id="lighthouses-wrecks"></div> Lighthouses & Wrecks</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'historic-districts')">
+      <div class="legend-badge active historic-district" id="historic-districts"></div> Historic Districts</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'nature')">
+      <div class="legend-badge active nature" id="nature"></div> Nature</div>
+    <div class="legend-item unselectable" onclick="toggleFeature(map, 'transportation-energy')">
+      <div class="legend-badge active transportation-energy" id="transportation-energy"></div> Transportation and Energy</div>
      <hr>
    <div class="legend-item unselectable" onclick="toggleLayer(map, 'native-lands')">
       <div class="legend-badge native-lands" id="native-lands"></div> Native Lands</div>
