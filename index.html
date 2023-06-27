@@ -417,7 +417,6 @@
       map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
     }
 
-
     /// init ////////////////////////////////////////////////////////////////////
 
     var map;
@@ -451,7 +450,7 @@
 
       map.on('load', (e) => {
         layers.map(id => {
-          map.setLayoutProperty(id, 'visibility', 'none')
+          map.setLayoutProperty(id, 'visibility', 'visible')
         })
         map.setLayoutProperty('places-of-interest', 'visibility', 'visible');
         map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
@@ -471,7 +470,6 @@
 
       map.on('click', (e) => {
         removeChildren(container);
-
         for (const feature of map.queryRenderedFeatures(e.point, {layers: layers})) {
           console.log(feature)
           const drawer = Drawer(feature.properties.heroimg, feature.properties.name, feature.properties.description, feature.properties.link1);
