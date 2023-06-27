@@ -103,14 +103,14 @@
     }
 
     .button-close {
-      position    : absolute;
-      display     : block;
-      inset       : 20px 10px auto auto;
-      width       : 21px;
-      height      : 21px;
-      color       : #000000;
-      opacity     : 0.5;
-      cursor      : pointer;
+      position : absolute;
+      display  : block;
+      inset    : 20px 10px auto auto;
+      width    : 21px;
+      height   : 21px;
+      color    : #000000;
+      opacity  : 0.5;
+      cursor   : pointer;
     }
 
     .compass {
@@ -121,7 +121,7 @@
       bottom   : 35px;
       opacity  : 0.8;
     }
-    
+
     .compass-terrain {
       position : fixed;
       inset    : auto 0px 0px auto;
@@ -183,7 +183,7 @@
       color            : #78553a;
       pointer-events   : none;
     }
-    
+
     #legend-container{
       position       : fixed;
       display        : flex;
@@ -191,7 +191,7 @@
       align-items    : flex-start;
       inset          : 10px 10px auto auto;
     }
-    
+
     #legend {
       background-color : #D9C0A3;
       color            : #433725;
@@ -214,7 +214,7 @@
       font-size   : 20px;
       float       : right;
     }
-    
+
     #legend.active:after {
       content : '\f107';
     }
@@ -301,6 +301,7 @@
     .transportation-energy.active {
       background-color : #777777;
     }
+
     .satellite{
       margin-top: 10px;
       margin-left: 18px;
@@ -384,9 +385,9 @@
       elem.className = 'detail scrollable'
       elem.innerHTML =
        `<img class="banner banner-detail" src="${heroimg}">
-	      <svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-	        <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
-	      </svg>
+        <svg id="detail-close-button" class="button-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+          <path id="detail-close-button" d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/>
+        </svg>
         <div class="title">${title}</div>
         <div class="detail-body">${description}</div>`;
       return elem;
@@ -401,6 +402,11 @@
       return elem;
     };
 
+    const toggleLayer = (map, id) => {
+      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
+      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
+    }
+
     const toggleFilter = (map, id) => {
       if (visiblelayers.has(id)){
         visiblelayers.delete(id);
@@ -411,17 +417,11 @@
       }
       map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
     }
-    
-    const toggleLayer = (map, id) => {
-      map.setLayoutProperty(id, 'visibility', map.getLayoutProperty(id, 'visibility') === 'visible' ? 'none' : 'visible');
-      map.getLayoutProperty(id, 'visibility') === 'visible' ? document.getElementById(id).classList.add('active') : document.getElementById(id).classList.remove('active')
-    }
 
     /// init ////////////////////////////////////////////////////////////////////
 
     var map;
-    var visiblelayers = new Set('empty') //empty value to prevent Mapbox filter from crashing when all POI are disabled.
-    
+
     document.addEventListener('DOMContentLoaded', (_) => {
 
       container = document.createElement('div');
@@ -441,11 +441,11 @@
       })
 
       map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
-        center: [-80.3, 25.628],
-        zoom: 8.22,
-        maxBounds: bounds
+        container : 'map',
+        style     : 'mapbox://styles/chriswkendall/cl5l5z512000015qhfnyn5rih',
+        center    : [-80.3, 25.628],
+        zoom      : 8.22,
+        maxBounds : bounds
       });
 
       map.on('load', (e) => {
@@ -456,15 +456,15 @@
         map.setFilter('places-of-interest', ['match', ['get', 'poitype'], Array.from(visiblelayers), true, false]);
         map.setLayoutProperty("places-of-interest", 'icon-image',
         ['match', ["get", "poitype"],
-          'archeological','archeological_site',
-          'culture','culture',
-          'lighthouses-wrecks','lighthouses_wrecks',
-          'monuments','monuments',
-          'nature','nature',
-          'parks','parks',
-          'transportation-energy','transport_energy',
-          'waterways','water_park',
-          'historic-districts', 'historic_sites',
+          'archeological'         ,'archeological_site',
+          'culture'               ,'culture',
+          'lighthouses-wrecks'    ,'lighthouses_wrecks',
+          'monuments'             ,'monuments',
+          'nature'                ,'nature',
+          'parks'                 ,'parks',
+          'transportation-energy' ,'transport_energy',
+          'waterways'             ,'water_park',
+          'historic-districts'    , 'historic_sites',
           'parks']);
         })
 
