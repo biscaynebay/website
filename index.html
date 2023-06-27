@@ -420,7 +420,7 @@
     /// init ////////////////////////////////////////////////////////////////////
 
     var map;
-    var visiblelayers = new Set('empty', 'archeological', 'culture', 'parks', 'waterways', 'monuments', 'lighthouses-wrecks', 'historic-districts', 'nature', 'transportation-energy') //empty value to prevent Mapbox filter from crashing when all POI are disabled.
+    var visiblelayers = new Set('empty') //empty value to prevent Mapbox filter from crashing when all POI are disabled.
     
     document.addEventListener('DOMContentLoaded', (_) => {
 
