@@ -121,6 +121,7 @@
       bottom   : 35px;
       opacity  : 0.8;
     }
+    
     .compass-terrain {
       position : fixed;
       inset    : auto 0px 0px auto;
@@ -129,8 +130,7 @@
     }
 
     .drawer {
-      position: fixed;
-      animation: slide 0.5s forwards;
+      position         : fixed;
       display          : block;
       inset            : 0 auto 0 0;
       width            : 375px;
@@ -139,6 +139,7 @@
       background-color : #f8f6f1;
       text-align       : justify;
       box-shadow       : 0 2px 4px rgba(0, 0, 0, .6);
+      animation        : slide 0.5s forwards;
       transition       : all 200ms ease-in-out;
     }
 
@@ -182,6 +183,7 @@
       color            : #78553a;
       pointer-events   : none;
     }
+    
     #legend-container{
       position       : fixed;
       display        : flex;
@@ -189,29 +191,32 @@
       align-items    : flex-start;
       inset          : 10px 10px auto auto;
     }
+    
     #legend {
-      background-color: #D9C0A3;
-      color: #433725;
-      cursor: pointer;
-      padding: 18px;
-      width:100%;
-      border: none;
-      text-align: left;
-      outline: none;
-      font-size: 15px;
-      text-align: center;
-      font-family    : "Merriweather";
-      border-radius: 5px;
+      background-color : #D9C0A3;
+      color            : #433725;
+      cursor           : pointer;
+      padding          : 18px;
+      width            :100%;
+      border           : none;
+      text-align       : left;
+      outline          : none;
+      font-size        : 15px;
+      text-align       : center;
+      font-family      : "Merriweather";
+      border-radius    : 5px;
+      user-select      : none;
     }
 
     #legend:after {
-      content: '\f106';
-      font-family: "fontawesome";
-      font-size: 20px;
-      float: right;
+      content     : '\f106';
+      font-family : "fontawesome";
+      font-size   : 20px;
+      float       : right;
     }
+    
     #legend.active:after {
-      content: '\f107';
+      content : '\f107';
     }
 
     .legend.active, #legend:hover {
@@ -219,12 +224,12 @@
     }
 
     #legend-content {
-      padding: 0 18px;
-      height: 0;
-      overflow: hidden;
-      transition: height 0.2s ease-out;
-      background-color: #F8F6F1;
-      border-radius: 0 0 5px 5px;
+      padding          : 0 18px;
+      height           : 0;
+      overflow         : hidden;
+      transition       : height 0.2s ease-out;
+      background-color : #F8F6F1;
+      border-radius    : 0 0 5px 5px;
     }
 
     .legend-item {
@@ -510,8 +515,6 @@
         compass.style.transform = 'rotate(' + direction + 'deg)';
       });
     });
-
-    
 
   </script>
 </head>
